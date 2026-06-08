@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Учебный Банк — Ваш финансовый старт</title>
+    <style>
+        /* Общие стили */
+        :root {
+            --primary-color: #2563eb;
+            --primary-dark: #1d4ed8;
+            --accent-color: #10b981;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --bg-light: #f8fafc;
+            --white: #ffffff;
+            --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-main);
+            background-color: var(--bg-light);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Шапка */
+        header {
+            background-color: var(--white);
+            height: 70px;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid #e2e8f0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary-color);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            background: var(--primary-color);
+            border-radius: 8px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text-main);
+            margin-left: 25px;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--primary-color);
+        }
+
+        /* Главный экран */
+        .hero {
+            padding: 80px 0;
+            background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            color: var(--text-main);
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 15px 35px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: transform 0.2s, background-color 0.2s;
+        }
+
+        .btn:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        /* Секция с картой */
+        .card-showcase {
+            padding: 60px 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .bank-card {
+            width: 400px;
+            height: 250px;
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            border-radius: 20px;
+            padding: 30px;
+            color: white;
+            position: relative;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            transition: transform 0.3s;
+        }
+
+        .bank-card:hover {
+            transform: rotateY(10deg) rotateX(5deg);
+        }
+
+        .card-chip {
+            width: 50px;
+            height: 40px;
+            background: linear-gradient(135deg, #ffd700 0%, #b8860b 100%);
+            border-radius: 8px;
+            margin-bottom: 40px;
+        }
+
+        .card-number {
+            font-size: 1.4rem;
+            letter-spacing: 3px;
+            margin-bottom: 20px;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        .card-holder {
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            opacity: 0.8;
+        }
+
+        .card-brand {
+            position: absolute;
+            bottom: 30px;
+            right: 30px;
+            font-weight: bold;
+            font-style: italic;
+            font-size: 1.2rem;
+        }
+
+        /* Банковские продукты */
+        .products {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.2rem;
+            margin-bottom: 50px;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .product-item {
+            background: var(--white);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: var(--card-shadow);
+            transition: transform 0.3s;
+        }
+
+        .product-item:hover {
+            transform: translateY(-10px);
+        }
+
+        .product-icon {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .product-item h3 {
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+
+        .product-item p {
+            color: var(--text-muted);
+        }
+
+        /* Цифровая безопасность */
+        .security {
+            padding: 80px 0;
+            background-color: #1e293b;
+            color: var(--white);
+        }
+
+        .security-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        .security-item {
+            border-left: 3px solid var(--accent-color);
+            padding-left: 20px;
+        }
+
+        .security-item h4 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: var(--accent-color);
+        }
+
+        /* Предупреждение */
+        .disclaimer-box {
+            margin-top: 60px;
+            background-color: #fffbeb;
+            border: 2px dashed #f59e0b;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        .disclaimer-box h5 {
+            color: #92400e;
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+
+        .disclaimer-box p {
+            color: #b45309;
+            font-size: 0.95rem;
+        }
+
+        footer {
+            padding: 40px 0;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            .bank-card { width: 100%; max-width: 350px; height: 210px; }
+            nav { display: none; } /* Скрываем навигацию для простоты учебного макета */
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container header-content">
+            <a href="#" class="logo">
+                <div class="logo-icon"></div>
+                Учебный Банк
+            </a>
+            <nav>
+                <a href="#products">Продукты</a>
+                <a href="#security">Безопасность</a>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>Управляйте будущим <br>с Учебным Банком</h1>
+            <p>Современные финансовые инструменты для обучения, развития и достижения ваших целей. Просто, прозрачно и безопасно.</p>
+            <a href="#products" class="btn">Узнать больше</a>
+        </div>
+    </section>
+
+    <section class="card-showcase">
+        <div class="bank-card">
+            <div class="card-chip"></div>
+            <div class="card-number">0000 0000 0000 0000</div>
+            <div class="card-holder">STUDENT NAME</div>
+            <div class="card-brand">Учебный</div>
+        </div>
+    </section>
+
+    <section class="products" id="products">
+        <div class="container">
+            <h2 class="section-title">Банковские продукты</h2>
+            <div class="products-grid">
+                <div class="product-item">
+                    <span class="product-icon">💳</span>
+                    <h3>Дебетовые карты</h3>
+                    <p>Кэшбэк на обучение и покупку книг, бесплатное обслуживание и моментальный выпуск цифровой карты.</p>
+                </div>
+                <div class="product-item">
+                    <span class="product-icon">📈</span>
+                    <h3>Вклады</h3>
+                    <p>Высокие процентные ставки для накоплений. Ваша финансовая подушка безопасности растет каждый день.</p>
+                </div>
+                <div class="product-item">
+                    <span class="product-icon">📱</span>
+                    <h3>Мобильное приложение</h3>
+                    <p>Удобный интерфейс для контроля расходов и управления всеми услугами в один клик.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="security" id="security">
+        <div class="container">
+            <h2 class="section-title" style="color: white;">Цифровая безопасность</h2>
+            <p style="text-align: center; max-width: 700px; margin: 0 auto;">Мы заботимся о защите ваших интересов и постоянно совершенствуем наши системы защиты.</p>
+            
+            <div class="security-grid">
+                <div class="security-item">
+                    <h4>Контроль доступа</h4>
+                    <p>Используйте только официальное приложение и не передавайте данные третьим лицам.</p>
+                </div>
+                <div class="security-item">
+                    <h4>Защита операций</h4>
+                    <p>Каждая операция требует подтверждения через защищенные каналы связи.</p>
+                </div>
+                <div class="security-item">
+                    <h4>Бдительность</h4>
+                    <p>Сотрудники банка никогда не запрашивают секретные коды или пароли.</p>
+                </div>
+            </div>
+
+            <div class="disclaimer-box">
+                <h5>⚠️ Внимание: Это учебный макет</h5>
+                <p>Данная страница создана исключительно в образовательных целях. Это вымышленный банк. Здесь нет форм ввода, мы не собираем и не храним ваши персональные данные, пароли или номера телефонов. Не вводите реальные данные на подобных учебных страницах.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2023–2024 Вымышленная организация «Учебный Банк». Все права защищены в рамках учебного курса.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
