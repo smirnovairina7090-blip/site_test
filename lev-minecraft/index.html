@@ -1,0 +1,378 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Шпаргалка Льва · Minecraft Fabric 1.21.1</title>
+<style>
+:root{
+  --sky:#77c8ff;--grass:#5f9f3a;--grass2:#77b84a;--dirt:#6f4a2c;--stone:#3b3f42;
+  --stone2:#2d3033;--coal:#17191b;--paper:#f1eddc;--ink:#171819;--gold:#f7cc52;
+  --diamond:#59d9cf;--red:#e4695f;--lime:#9ddd68;--line:#54595d;--white:#f8fbff;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;color:var(--white);font-family:"Courier New",ui-monospace,monospace;
+  background:
+    linear-gradient(rgba(16,19,21,.83),rgba(16,19,21,.92)),
+    repeating-linear-gradient(0deg,#303438 0 32px,#2b2f32 32px 64px);
+  min-height:100vh;
+}
+button,input{font:inherit}
+.wrap{width:min(1180px,calc(100% - 28px));margin:auto}
+.pixel{
+  border:3px solid #101214;
+  box-shadow:4px 4px 0 #101214,inset 0 0 0 2px rgba(255,255,255,.08);
+}
+.top{
+  position:sticky;top:0;z-index:30;background:#202326;border-bottom:4px solid #111;
+}
+.topin{display:flex;align-items:center;gap:12px;padding:10px 0}
+.brand{font-weight:900;letter-spacing:.4px;white-space:nowrap}
+.brand b{color:var(--lime)}
+.search{
+  flex:1;background:#111416;color:#fff;border:2px solid #555;padding:10px 12px;
+  outline:none;min-width:120px;
+}
+.search:focus{border-color:var(--diamond)}
+header{
+  position:relative;overflow:hidden;
+  background:
+    linear-gradient(#78c7ff 0 44%,#87d26a 44% 50%,#5b923a 50% 56%,#704b2e 56%);
+  color:#111;border-bottom:5px solid #111;
+}
+.hero{padding:56px 0 46px;display:grid;grid-template-columns:1.35fr .65fr;gap:22px}
+.heroBox{
+  background:rgba(244,239,217,.95);padding:30px;border:4px solid #111;
+  box-shadow:8px 8px 0 rgba(0,0,0,.55)
+}
+.kicker{font-weight:900;color:#3e6529;text-transform:uppercase;letter-spacing:1px}
+h1{font-size:clamp(40px,7vw,78px);line-height:.93;margin:10px 0 16px;letter-spacing:-3px}
+.hero p{font-size:18px;line-height:1.5;margin:0;max-width:800px}
+.version{
+  background:#282c2f;color:#fff;padding:24px;border:4px solid #111;
+  box-shadow:8px 8px 0 rgba(0,0,0,.55)
+}
+.version h3{margin:0 0 14px;font-size:24px;color:var(--gold)}
+.version code{color:var(--diamond)}
+.quick{
+  display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:18px
+}
+.quick button{
+  border:3px solid #111;background:#ece5c9;padding:12px 8px;cursor:pointer;font-weight:900;
+  box-shadow:3px 3px 0 #111;color:#171819
+}
+.quick button:hover{transform:translate(-1px,-1px);box-shadow:4px 4px 0 #111}
+main{padding:30px 0 70px}
+.notice{
+  background:#1d3520;border-left:8px solid var(--lime);padding:18px 20px;margin:0 0 22px;
+  line-height:1.5
+}
+.notice strong{color:#b8ef89}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 24px}
+.chip{
+  border:2px solid #111;background:#34383b;color:#fff;padding:9px 12px;cursor:pointer;
+  box-shadow:2px 2px 0 #111
+}
+.chip.active{background:var(--gold);color:#151515}
+.section{margin:34px 0}
+.sectionHead{display:flex;gap:14px;align-items:flex-end;justify-content:space-between;margin-bottom:14px}
+.sectionHead h2{margin:0;font-size:31px}
+.sectionHead p{margin:0;color:#c3cbd1;max-width:600px;text-align:right}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.card{
+  background:#303437;border:3px solid #111;box-shadow:4px 4px 0 #111;
+  padding:18px;cursor:pointer;min-height:180px;position:relative;transition:.08s
+}
+.card:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 #111}
+.card.hide{display:none}
+.card .tag{
+  display:inline-block;font-size:12px;font-weight:900;padding:5px 7px;background:#191b1d;
+  border:1px solid #676d72;color:#b9c3ca;margin-bottom:10px
+}
+.card h3{margin:0 0 9px;font-size:20px;color:#fff}
+.card p{margin:0;color:#d0d6da;line-height:1.45}
+.card code{display:block;margin-top:13px;color:#9be7df;background:#17191b;padding:10px;overflow:auto}
+.openHint{position:absolute;right:12px;bottom:9px;color:#8f989e;font-size:11px}
+.callout{background:#4b3b18!important}
+.callout h3{color:#ffe38c}
+.current{background:#24402a!important}
+.current h3{color:#b8f18f}
+.modal{
+  position:fixed;inset:0;z-index:100;background:rgba(0,0,0,.78);
+  display:none;align-items:center;justify-content:center;padding:20px
+}
+.modal.show{display:flex}
+.window{
+  width:min(820px,100%);max-height:86vh;overflow:auto;background:#ece6cf;color:#171819;
+  border:4px solid #111;box-shadow:10px 10px 0 #000
+}
+.winbar{
+  position:sticky;top:0;background:#3b3f42;color:#fff;padding:11px 14px;
+  border-bottom:3px solid #111;display:flex;align-items:center;justify-content:space-between;z-index:2
+}
+.winbar b{color:#d5f5b0}
+.close{border:2px solid #111;background:#d86b61;color:#111;width:34px;height:30px;font-weight:900;cursor:pointer}
+.body{padding:24px}
+.body h2{margin:0 0 8px;font-size:30px}
+.body .desc{line-height:1.55}
+.miniTitle{font-weight:900;margin:20px 0 8px;color:#375e29}
+pre{
+  white-space:pre-wrap;overflow:auto;background:#17191b;color:#e8f4ef;padding:15px;
+  border:3px solid #111;line-height:1.45
+}
+.copy{
+  border:2px solid #111;background:#7eb654;padding:8px 11px;font-weight:900;cursor:pointer;
+  box-shadow:2px 2px 0 #111;margin-top:7px
+}
+.examples{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.example{background:#ded7ba;border:2px solid #9f987d;padding:10px}
+.bigCode{font-size:16px}
+.empty{display:none;padding:30px;text-align:center;color:#d3d7d9;border:2px dashed #70777c}
+footer{border-top:4px solid #111;background:#17191b;padding:25px 0;color:#9ba4aa}
+footer b{color:#b8ef89}
+@media(max-width:880px){
+  .hero{grid-template-columns:1fr}.quick{grid-template-columns:repeat(2,1fr)}
+  .grid{grid-template-columns:1fr 1fr}.sectionHead{display:block}.sectionHead p{text-align:left;margin-top:6px}
+}
+@media(max-width:560px){
+  .topin{flex-wrap:wrap}.search{order:3;flex-basis:100%}.grid{grid-template-columns:1fr}
+  .quick{grid-template-columns:1fr 1fr}.hero{padding:32px 0}.heroBox,.version{padding:20px}
+  h1{letter-spacing:-2px}.examples{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div class="top">
+  <div class="wrap topin">
+    <div class="brand">⛏ <b>ЛЕВ</b> · MOD WIKI</div>
+    <input id="search" class="search" placeholder="Найти: UNDERGROUND, MONSTER, высота, паук, goal...">
+  </div>
+</div>
+
+<header>
+  <div class="wrap hero">
+    <div class="heroBox">
+      <div class="kicker">Minecraft Java · быстрая шпаргалка</div>
+      <h1>Лев, где это<br>называется?</h1>
+      <p>Большая памятка по названиям, типам мобов, спавну, высотам, поведению и файлам мода. Нажимай на карточку — откроется отдельное окно с объяснением и кодом.</p>
+      <div class="quick">
+        <button data-jump="mobcat">Мобы</button>
+        <button data-jump="spawn">Спавн</button>
+        <button data-jump="height">Высоты</button>
+        <button data-jump="ai">Поведение</button>
+        <button data-jump="project">Наш паук</button>
+      </div>
+    </div>
+    <div class="version">
+      <h3>НАША СБОРКА</h3>
+      <p><code>Minecraft 1.21.1</code></p>
+      <p><code>Fabric</code></p>
+      <p><code>Mojang mappings</code></p>
+      <p><code>Java 21</code></p>
+      <hr style="border:0;border-top:2px solid #555">
+      <p style="color:#b9c1c7">Подсказки здесь записаны теми именами, которые Лев видит в Java-коде проекта.</p>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="notice pixel">
+    <strong>Самая важная мысль:</strong> <code>MobCategory</code> — это категория для спавна и лимитов, а «агрессивный / нейтральный / приручаемый» — это уже поведение и класс моба. Поэтому отдельного <code>MobCategory.NEUTRAL</code> в Minecraft нет.
+  </div>
+
+  <div class="filters" id="filters"></div>
+  <div id="content"></div>
+  <div class="empty" id="empty">Ничего не нашлось. Попробуй другое слово или часть Java-названия.</div>
+</main>
+
+<div class="modal" id="modal" aria-hidden="true">
+  <div class="window">
+    <div class="winbar"><b id="modalTag">Шпаргалка</b><button class="close" id="close">X</button></div>
+    <div class="body" id="modalBody"></div>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap"><b>Лев · Minecraft Mod Wiki</b><br>Можно дополнять новыми карточками по мере разработки мода.</div>
+</footer>
+
+<script>
+const sections = [
+  {id:"mobcat",title:"MobCategory — категории мобов",hint:"Как Minecraft группирует сущности для естественного спавна и лимитов.",cards:[
+    {t:"MONSTER",tag:"MobCategory",code:"MobCategory.MONSTER",text:"Монстры. Сюда относится и обычный паук.",more:"Категория отвечает не за каждую деталь поведения, а за группу спавна. Паук может не нападать при ярком свете, но его категория всё равно MONSTER.",examples:["Zombie","Skeleton","Creeper","Spider","Enderman"]},
+    {t:"CREATURE",tag:"MobCategory",code:"MobCategory.CREATURE",text:"Наземные мирные/животные сущности.",more:"Эту категорию часто увидишь у животных. Нейтральное поведение не создаёт отдельную категорию: например, животное может быть CREATURE и при этом защищаться.",examples:["Cow","Sheep","Pig","Wolf","Bee"]},
+    {t:"AMBIENT",tag:"MobCategory",code:"MobCategory.AMBIENT",text:"Фоновая живность.",more:"Небольшая отдельная группа для атмосферных мобов.",examples:["Bat"]},
+    {t:"AXOLOTLS",tag:"MobCategory",code:"MobCategory.AXOLOTLS",text:"Отдельная группа аксолотлей.",more:"Да, для аксолотлей у Minecraft есть собственная категория.",examples:["Axolotl"]},
+    {t:"UNDERGROUND_WATER_CREATURE",tag:"MobCategory",code:"MobCategory.UNDERGROUND_WATER_CREATURE",text:"Подземные водные сущности. Вот тот самый UNDERGROUND.",more:"Это не «подземный монстр вообще». Это именно категория подземных водных существ.",examples:["Glow Squid"]},
+    {t:"WATER_CREATURE",tag:"MobCategory",code:"MobCategory.WATER_CREATURE",text:"Крупные водные сущности.",more:"Группа водных существ для естественного спавна.",examples:["Squid","Dolphin"]},
+    {t:"WATER_AMBIENT",tag:"MobCategory",code:"MobCategory.WATER_AMBIENT",text:"Фоновая водная живность.",more:"Обычно сюда относятся небольшие рыбы.",examples:["Cod","Salmon","Pufferfish","Tropical Fish"]},
+    {t:"MISC",tag:"MobCategory",code:"MobCategory.MISC",text:"Прочие сущности: снаряды, служебные сущности и т.п.",more:"Для наших магических снарядов в проекте используется именно MISC.",examples:["Projectile","Boat","прочие не-мобы"]}
+  ]},
+  {id:"behavior",title:"Класс и поведение моба",hint:"Что наследовать, если нужен монстр, животное или нейтральное поведение.",cards:[
+    {t:"Monster",tag:"класс",code:"extends Monster",text:"База для враждебных монстров.",more:"Удобная база, если создаёшь собственного враждебного моба. В нашем случае CrystalSpider наследуется ещё точнее — от Spider.",examples:["Zombie-подобные мобы","кастомные монстры"]},
+    {t:"Spider",tag:"класс",code:"extends Spider",text:"Готовая база обычного ванильного паука.",more:"Наш CrystalSpider наследуется от Spider, поэтому получает много готового поведения обычного паука.",examples:["CrystalSpider extends Spider"]},
+    {t:"Animal",tag:"класс",code:"extends Animal",text:"База для животных.",more:"Подходит, когда создаётся животное с типичным животным поведением и механиками размножения.",examples:["корова-подобный моб","овца-подобный моб"]},
+    {t:"TamableAnimal",tag:"класс",code:"extends TamableAnimal",text:"База для приручаемых животных.",more:"Полезно для мобов, у которых есть хозяин и состояние приручения.",examples:["волк-подобный моб","кот-подобный моб"]},
+    {t:"NeutralMob",tag:"интерфейс",code:"implements NeutralMob",text:"Поведение «не трогай меня — и я тебя не трону».",more:"Важно: NeutralMob — не MobCategory. Это отдельная идея поведения. Моб может быть в MONSTER или CREATURE и при этом вести себя нейтрально.",examples:["часть нейтральных мобов"]},
+    {t:"WaterAnimal",tag:"класс",code:"extends WaterAnimal",text:"База для водных животных.",more:"Используется для существ, жизнь и движение которых связаны с водой.",examples:["водный кастомный моб"]},
+    {t:"AmbientCreature",tag:"класс",code:"extends AmbientCreature",text:"База для фоновых существ.",more:"Пригодится для простой атмосферной живности.",examples:["летучая мышь-подобный моб"]},
+    {t:"PathfinderMob",tag:"класс",code:"extends PathfinderMob",text:"Моб с навигацией и системой целей.",more:"Полезная базовая точка для существ, которым нужны goalSelector и навигация.",examples:["кастомный наземный моб"]}
+  ]},
+  {id:"spawn",title:"Где и как спавниться",hint:"SpawnPlacementTypes, естественный спавн и числа в addSpawn.",cards:[
+    {t:"ON_GROUND",tag:"SpawnPlacementTypes",code:"SpawnPlacementTypes.ON_GROUND",text:"Спавн на земле.",more:"Именно это сейчас стоит у CrystalSpider.",examples:["паук","зомби","наземные мобы"],cls:"current"},
+    {t:"IN_WATER",tag:"SpawnPlacementTypes",code:"SpawnPlacementTypes.IN_WATER",text:"Точка спавна должна быть в воде.",more:"Используй для водных существ, когда нужна проверка размещения в воде.",examples:["водные мобы"]},
+    {t:"IN_LAVA",tag:"SpawnPlacementTypes",code:"SpawnPlacementTypes.IN_LAVA",text:"Точка спавна должна быть в лаве.",more:"Специальный вариант для лавовых существ.",examples:["лавовый кастомный моб"]},
+    {t:"NO_RESTRICTIONS",tag:"SpawnPlacementTypes",code:"SpawnPlacementTypes.NO_RESTRICTIONS",text:"Без обычного ограничения «земля/вода/лава».",more:"Само по себе не означает, что моб гарантированно может появиться где угодно: дополнительные правила всё равно могут ограничивать спавн.",examples:["особые сущности"]},
+    {t:"addSpawn: weight",tag:"число",code:"100",text:"Вес спавна: насколько часто запись выбирается относительно других.",more:"В нашем CrystalSpider сейчас weight = 100. Это не «100% шанс». Это относительный вес.",examples:["100 — текущее значение CrystalSpider"],cls:"current"},
+    {t:"min / max group",tag:"числа",code:"3, 3",text:"Минимальный и максимальный размер группы.",more:"В нашем addSpawn стоят 3 и 3, значит выбранная группа создаётся размером 3.",examples:["minGroup = 3","maxGroup = 3"],cls:"current"}
+  ]},
+  {id:"height",title:"Высоты и Heightmap.Types",hint:"Какая «карта высот» используется при поиске поверхности.",cards:[
+    {t:"WORLD_SURFACE",tag:"Heightmap.Types",code:"Heightmap.Types.WORLD_SURFACE",text:"Верхний не-воздушный блок.",more:"Подходит, когда нужна фактическая верхняя поверхность столбца.",examples:["поверхность мира"]},
+    {t:"WORLD_SURFACE_WG",tag:"Heightmap.Types",code:"Heightmap.Types.WORLD_SURFACE_WG",text:"WORLD_SURFACE для world generation.",more:"Суффикс WG = world generation. Это вариант, используемый при генерации мира.",examples:["worldgen"]},
+    {t:"OCEAN_FLOOR",tag:"Heightmap.Types",code:"Heightmap.Types.OCEAN_FLOOR",text:"Поверхность дна, игнорирующая воду как «верх».",more:"Полезно, когда нужна именно твёрдая поверхность под водой.",examples:["дно океана"]},
+    {t:"OCEAN_FLOOR_WG",tag:"Heightmap.Types",code:"Heightmap.Types.OCEAN_FLOOR_WG",text:"OCEAN_FLOOR для world generation.",more:"Версия карты дна для генерации мира.",examples:["worldgen"]},
+    {t:"MOTION_BLOCKING",tag:"Heightmap.Types",code:"Heightmap.Types.MOTION_BLOCKING",text:"Верхняя точка, блокирующая движение; учитывает жидкости.",more:"Карта высот, ориентированная на то, что мешает движению.",examples:["коллизия","жидкости"]},
+    {t:"MOTION_BLOCKING_NO_LEAVES",tag:"Heightmap.Types",code:"Heightmap.Types.MOTION_BLOCKING_NO_LEAVES",text:"Как MOTION_BLOCKING, но листья не считаются опорной поверхностью.",more:"Именно этот тип сейчас используется в spawnRestriction CrystalSpider.",examples:["текущий CrystalSpider"],cls:"current"},
+    {t:"Y-координата",tag:"координаты",code:"pos.getY()",text:"Получить высоту текущей позиции.",more:"X — восток/запад, Y — высота, Z — север/юг. Для проверки «достаточно ли глубоко» нас интересует Y.",examples:["pos.getY() <= 35"]},
+    {t:"Наша граница пещеры",tag:"наш проект",code:"pos.getY() <= 35",text:"CrystalSpider разрешён только на Y ≤ 35.",more:"Это наше собственное правило, а не встроенное значение Minecraft. Его можно менять под дизайн мода.",examples:["boolean isCaveLevel = pos.getY() <= 35;"],cls:"current"}
+  ]},
+  {id:"ai",title:"AI Goals — частые поведения",hint:"Названия классов, которые часто добавляют в goalSelector и targetSelector.",cards:[
+    {t:"FloatGoal",tag:"goal",code:"new FloatGoal(this)",text:"Помогает мобу держаться на плаву.",more:"Обычно ставится с высоким приоритетом, если моб должен нормально реагировать на воду.",examples:["goalSelector"]},
+    {t:"MeleeAttackGoal",tag:"goal",code:"new MeleeAttackGoal(this, 1.0D, true)",text:"Ближняя атака.",more:"Используется для мобов, которые должны преследовать цель и атаковать вблизи.",examples:["монстры","охранники"]},
+    {t:"WaterAvoidingRandomStrollGoal",tag:"goal",code:"new WaterAvoidingRandomStrollGoal(this, 1.0D)",text:"Случайная прогулка с избеганием воды.",more:"Удобное стандартное блуждание для наземного моба.",examples:["goalSelector"]},
+    {t:"LookAtPlayerGoal",tag:"goal",code:"new LookAtPlayerGoal(this, Player.class, 8.0F)",text:"Смотреть на игрока поблизости.",more:"Не делает моба агрессивным само по себе.",examples:["визуальное поведение"]},
+    {t:"RandomLookAroundGoal",tag:"goal",code:"new RandomLookAroundGoal(this)",text:"Иногда смотреть по сторонам.",more:"Простое фоновое поведение.",examples:["idle"]},
+    {t:"HurtByTargetGoal",tag:"target goal",code:"new HurtByTargetGoal(this)",text:"Выбирать обидчика целью.",more:"Очень полезно для нейтральной логики: моб может начать отвечать после получения урона.",examples:["targetSelector"]},
+    {t:"NearestAttackableTargetGoal",tag:"target goal",code:"new NearestAttackableTargetGoal<>(this, Player.class, true)",text:"Искать ближайшую подходящую цель.",more:"Это уже агрессивный выбор цели. Класс цели можно менять.",examples:["Player.class","LivingEntity class"]},
+    {t:"TemptGoal",tag:"goal",code:"new TemptGoal(...)",text:"Следовать за предметом-приманкой.",more:"Часто встречается у животных. Параметры зависят от конкретной логики предметов.",examples:["еда","приманка"]}
+  ]},
+  {id:"entities",title:"Частые EntityType — названия ванильных мобов",hint:"Если нужен селектор, сравнение или пример EntityType.",cards:[
+    {t:"SPIDER",tag:"EntityType",code:"EntityType.SPIDER",text:"Обычный паук.",more:"В нашем BiomeSelectors.spawnsOneOf(EntityType.SPIDER) это используется как ориентир: кристаллический паук добавляется туда, где может спавниться обычный.",examples:["Spider"]},
+    {t:"ZOMBIE",tag:"EntityType",code:"EntityType.ZOMBIE",text:"Зомби.",more:"Ванильная константа EntityType.",examples:["Monster"]},
+    {t:"SKELETON",tag:"EntityType",code:"EntityType.SKELETON",text:"Скелет.",more:"Ванильная константа EntityType.",examples:["Monster"]},
+    {t:"CREEPER",tag:"EntityType",code:"EntityType.CREEPER",text:"Крипер.",more:"Ванильная константа EntityType.",examples:["Monster"]},
+    {t:"ENDERMAN",tag:"EntityType",code:"EntityType.ENDERMAN",text:"Эндермен.",more:"Хороший пример того, почему категория и поведение — не одно и то же: он относится к MONSTER, но обычно становится агрессивным по условию.",examples:["нейтральное поведение + MONSTER"]},
+    {t:"WOLF",tag:"EntityType",code:"EntityType.WOLF",text:"Волк.",more:"Пример сущности с нейтральным/приручаемым поведением, но не отдельной MobCategory.NEUTRAL.",examples:["CREATURE"]},
+    {t:"GLOW_SQUID",tag:"EntityType",code:"EntityType.GLOW_SQUID",text:"Светящийся спрут.",more:"Классический пример UNDERGROUND_WATER_CREATURE.",examples:["подземная вода"]},
+    {t:"AXOLOTL",tag:"EntityType",code:"EntityType.AXOLOTL",text:"Аксолотль.",more:"Пример категории AXOLOTLS.",examples:["AXOLOTLS"]}
+  ]},
+  {id:"builder",title:"EntityType.Builder — параметры сущности",hint:"Что означают частые методы рядом с регистрацией entity.",cards:[
+    {t:"sized",tag:"Builder",code:".sized(1.4F, 0.9F)",text:"Ширина и высота hitbox.",more:"Это не размер текстуры. Это физические габариты сущности для столкновений.",examples:["CrystalSpider: 1.4 × 0.9"],cls:"current"},
+    {t:"clientTrackingRange",tag:"Builder",code:".clientTrackingRange(4)",text:"Дальность сетевого отслеживания сущности клиентом.",more:"Параметр синхронизации/наблюдения, а не радиус агрессии.",examples:["у наших entity часто 4"]},
+    {t:"updateInterval",tag:"Builder",code:".updateInterval(10)",text:"Интервал сетевых обновлений.",more:"В проекте он указан у магических снарядов.",examples:["LightProjectile","FlameProjectile","WindProjectile","RedstoneProjectile"]},
+    {t:"build",tag:"Builder",code:".build()",text:"Завершает построение EntityType.",more:"Обычно находится в конце цепочки Builder.",examples:["EntityType.Builder"]}
+  ]},
+  {id:"project",title:"Наш CrystalSpider — готовые ориентиры",hint:"Самое полезное из текущего проекта Льва.",cards:[
+    {t:"Категория паука",tag:"наш проект",code:"MobCategory.MONSTER",text:"CrystalSpider зарегистрирован как MONSTER.",more:"Это влияет на категорию спавна. При этом сам класс CrystalSpider наследуется от Spider.",examples:["ModEntities.java"],cls:"current"},
+    {t:"Где спавнится",tag:"наш проект",code:"BiomeSelectors.spawnsOneOf(EntityType.SPIDER)",text:"Добавляем CrystalSpider в биомы, где спавнится обычный Spider.",more:"Так нам не приходится вручную перечислять все подходящие биомы.",examples:["ModEntitySpawns.java"],cls:"current"},
+    {t:"Размещение",tag:"наш проект",code:"SpawnPlacementTypes.ON_GROUND",text:"CrystalSpider должен появляться на земле.",more:"Проверка размещения зарегистрирована в FabricEntityType.Builder.createMob(...).",examples:["ModEntities.java"],cls:"current"},
+    {t:"Карта высот",tag:"наш проект",code:"Heightmap.Types.MOTION_BLOCKING_NO_LEAVES",text:"Для ограничения спавна используем поверхность без листьев.",more:"Это текущая настройка spawnRestriction.",examples:["ModEntities.java"],cls:"current"},
+    {t:"Глубина",tag:"наш проект",code:"pos.getY() <= 35",text:"Разрешаем появление только достаточно глубоко.",more:"Это пользовательское правило CrystalSpider.",examples:["CrystalSpider.java"],cls:"current"},
+    {t:"Ванильные правила",tag:"наш проект",code:"Monster.checkMonsterSpawnRules(...)",text:"Кроме нашей глубины, паук проходит обычные правила спавна монстров.",more:"Итог: isCaveLevel && vanillaMonsterRules.",examples:["CrystalSpider.java"],cls:"current"},
+    {t:"Группа",tag:"наш проект",code:"100, 3, 3",text:"Вес 100, минимальная группа 3, максимальная группа 3.",more:"Передаётся в BiomeModifications.addSpawn(...).",examples:["ModEntitySpawns.java"],cls:"current"},
+    {t:"Наследование",tag:"наш проект",code:"public class CrystalSpider extends Spider",text:"Наш паук получает основу обычного Spider.",more:"Отдельно модель на клиенте наследует SpiderModel, поэтому ванильная анимация тоже переиспользуется.",examples:["CrystalSpider.java","CrystalSpiderModel.java"],cls:"current"}
+  ]},
+  {id:"files",title:"Где что лежит в проекте",hint:"Быстро найти нужный файл, а не листать весь репозиторий.",cards:[
+    {t:"Сущности",tag:"путь",code:"src/main/java/ru/azazel/alchemytable/entity/",text:"CrystalSpider, ModEntities, ModEntitySpawns, снаряды.",more:"Основная серверная/общая логика сущностей.",examples:["CrystalSpider.java","ModEntities.java","ModEntitySpawns.java"]},
+    {t:"Клиентская модель",tag:"путь",code:"src/client/java/ru/azazel/alchemytable/client/model/",text:"Java-модель сущности.",more:"Здесь сейчас CrystalSpiderModel и наследование от SpiderModel.",examples:["CrystalSpiderModel.java"]},
+    {t:"Renderer",tag:"путь",code:"src/client/java/ru/azazel/alchemytable/client/render/",text:"Связывает entity, model и texture.",more:"Если сущность есть, но визуально что-то не так, renderer — один из первых файлов для проверки.",examples:["CrystalSpiderRenderer.java"]},
+    {t:"Текстуры сущностей",tag:"путь",code:"src/main/resources/assets/azazels-alchemy-table/textures/entity/",text:"PNG-текстуры мобов.",more:"У CrystalSpider сейчас используется crystal_spider.png.",examples:["crystal_spider.png"]},
+    {t:"Языки",tag:"путь",code:"src/main/resources/assets/azazels-alchemy-table/lang/",text:"Названия предметов и сущностей для игрока.",more:"Обычно en_us.json и ru_ru.json.",examples:["ru_ru.json","en_us.json"]},
+    {t:"Loot tables",tag:"путь",code:"src/main/resources/data/azazels-alchemy-table/loot_table/entities/",text:"Что выпадает из сущности.",more:"Здесь лежит таблица дропа CrystalSpider.",examples:["crystal_spider.json"]}
+  ]},
+  {id:"imports",title:"Импорты, которые хочется забыть",hint:"Готовые Java-пути для частых типов.",cards:[
+    {t:"MobCategory",tag:"import",code:"import net.minecraft.world.entity.MobCategory;",text:"Категории сущностей.",more:"MONSTER, CREATURE, AMBIENT и другие.",examples:[]},
+    {t:"EntityType",tag:"import",code:"import net.minecraft.world.entity.EntityType;",text:"Типы сущностей.",more:"SPIDER, ZOMBIE, WOLF и ваши зарегистрированные EntityType.",examples:[]},
+    {t:"SpawnPlacementTypes",tag:"import",code:"import net.minecraft.world.entity.SpawnPlacementTypes;",text:"ON_GROUND, IN_WATER, IN_LAVA, NO_RESTRICTIONS.",more:"Используется при регистрации ограничений спавна.",examples:[]},
+    {t:"Heightmap",tag:"import",code:"import net.minecraft.world.level.levelgen.Heightmap;",text:"Heightmap.Types.*",more:"Тип карты высот для размещения.",examples:[]},
+    {t:"BiomeModifications",tag:"import",code:"import net.fabricmc.fabric.api.biome.v1.BiomeModifications;",text:"Добавление естественного спавна через Fabric API.",more:"В нашем проекте используется в ModEntitySpawns.",examples:[]},
+    {t:"BiomeSelectors",tag:"import",code:"import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;",text:"Выбирает биомы для модификации.",more:"Например spawnsOneOf(EntityType.SPIDER).",examples:[]}
+  ]}
+];
+
+const filters=["Все","MobCategory","Спавн","Высоты","Поведение","Наш проект","Файлы","Импорты"];
+let active="Все";
+
+function categoryFor(section,card){
+  if(section.id==="mobcat") return "MobCategory";
+  if(section.id==="spawn") return "Спавн";
+  if(section.id==="height") return "Высоты";
+  if(section.id==="behavior"||section.id==="ai") return "Поведение";
+  if(section.id==="project") return "Наш проект";
+  if(section.id==="files") return "Файлы";
+  if(section.id==="imports") return "Импорты";
+  return "Все";
+}
+
+filters.forEach(f=>{
+  const b=document.createElement("button");
+  b.className="chip"+(f==="Все"?" active":"");
+  b.textContent=f;
+  b.onclick=()=>{active=f;document.querySelectorAll(".chip").forEach(x=>x.classList.remove("active"));b.classList.add("active");applyFilter()};
+  document.getElementById("filters").appendChild(b);
+});
+
+function render(){
+  const root=document.getElementById("content");
+  root.innerHTML="";
+  sections.forEach(section=>{
+    const s=document.createElement("section");
+    s.className="section";s.id=section.id;
+    s.innerHTML='<div class="sectionHead"><h2>'+section.title+'</h2><p>'+section.hint+'</p></div><div class="grid"></div>';
+    const g=s.querySelector(".grid");
+    section.cards.forEach(card=>{
+      const d=document.createElement("article");
+      d.className="card "+(card.cls||"");
+      d.dataset.search=[section.title,section.hint,card.t,card.tag,card.code,card.text,card.more,...(card.examples||[])].join(" ").toLowerCase();
+      d.dataset.category=categoryFor(section,card);
+      d.innerHTML='<span class="tag">'+card.tag+'</span><h3>'+card.t+'</h3><p>'+card.text+'</p><code>'+escapeHtml(card.code)+'</code><span class="openHint">ОТКРЫТЬ ↗</span>';
+      d.onclick=()=>openCard(section,card);
+      g.appendChild(d);
+    });
+    root.appendChild(s);
+  });
+}
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[m]))}
+function openCard(section,card){
+  modalTag.textContent=section.title;
+  const ex=(card.examples||[]).length
+    ? '<div class="miniTitle">Примеры / где встречается</div><div class="examples">'+card.examples.map(x=>'<div class="example">'+escapeHtml(x)+'</div>').join("")+'</div>'
+    :"";
+  modalBody.innerHTML='<h2>'+card.t+'</h2><p class="desc">'+card.text+'</p><p class="desc">'+card.more+'</p><div class="miniTitle">Java-запись</div><pre class="bigCode">'+escapeHtml(card.code)+'</pre><button class="copy" data-copy="'+encodeURIComponent(card.code)+'">Скопировать код</button>'+ex;
+  modal.classList.add("show");modal.setAttribute("aria-hidden","false");
+  modalBody.querySelector(".copy").onclick=e=>{
+    const val=decodeURIComponent(e.target.dataset.copy);
+    navigator.clipboard.writeText(val).then(()=>{e.target.textContent="Скопировано ✓";setTimeout(()=>e.target.textContent="Скопировать код",1200)}).catch(()=>prompt("Скопируй:",val));
+  };
+}
+function closeModal(){modal.classList.remove("show");modal.setAttribute("aria-hidden","true")}
+close.onclick=closeModal;
+modal.onclick=e=>{if(e.target===modal)closeModal()};
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeModal()});
+
+function applyFilter(){
+  const q=search.value.trim().toLowerCase();
+  let visible=0;
+  document.querySelectorAll(".card").forEach(c=>{
+    const okQ=!q||c.dataset.search.includes(q);
+    const okC=active==="Все"||c.dataset.category===active;
+    const show=okQ&&okC;
+    c.classList.toggle("hide",!show);
+    if(show) visible++;
+  });
+  document.querySelectorAll(".section").forEach(s=>{
+    const any=[...s.querySelectorAll(".card")].some(c=>!c.classList.contains("hide"));
+    s.style.display=any?"":"none";
+  });
+  empty.style.display=visible?"none":"block";
+}
+search.addEventListener("input",applyFilter);
+document.querySelectorAll("[data-jump]").forEach(b=>b.onclick=()=>{
+  document.getElementById(b.dataset.jump).scrollIntoView({behavior:"smooth",block:"start"});
+});
+render();
+</script>
+</body>
+</html>
