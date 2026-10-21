@@ -3,62 +3,70 @@
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#211b49">
-<meta name="description" content="Комплексы: электронные пары, донорно-акцепторная связь, лиганды, заряды, устойчивость и задачи с проверкой. Интерактивная лаборатория по координационной химии.">
-<title>Внутри квадратных скобок | Лаборатория координации</title>
+<meta name="description" content="Комплексные соединения: определение, состав, лиганды, координационная связь, заряд, гидроксокомплексы алюминия и цинка, уравнения реакций и задания по химии для ЕГЭ.">
+<title>Комплексные соединения | Теория и практика для ЕГЭ по химии</title>
 <link rel="stylesheet" href="styles.css">
 </head>
 <body id="top">
 <header class="topbar">
  <div class="top-inner">
- <a href="#top" class="brand" aria-label="На главную"><span class="logo" aria-hidden="true">⌬</span><span>Внутри скобок<span class="purple">.</span></span></a>
+ <a href="#top" class="brand" aria-label="Комплексные соединения. В начало"><span class="logo" aria-hidden="true">Co</span><span>Комплексные соединения</span></a>
  <button id="nav-toggle" class="nav-toggle" aria-controls="topnav" aria-expanded="false">Разделы</button>
- <nav class="topnav" id="topnav" aria-label="Разделы"><a href="#structure">Устройство</a><a href="#electrons">Электроны</a><a href="#builder">Конструктор</a><a href="#classification">Формулы</a><a href="#equilibria">Устойчивость</a><a href="#reactions">Реакции</a><a href="#practice">Задачи</a><a href="#quiz">Тест</a></nav>
+ <nav class="topnav" id="topnav" aria-label="Разделы"><a href="#structure">Определение</a><a href="#electrons">Механизм связи</a><a href="#classification">Строение и заряд</a><a href="#coordination">Число лигандов</a><a href="#reactions">Реакции</a><a href="#practice">Практика ЕГЭ</a><a href="#quiz">Проверка</a></nav>
  </div><div class="progress-track"><i id="scroll-progress"></i></div>
 </header>
 <main>
 <section class="hero">
- <div class="wide hero-grid">
- <div>
- <div class="eyebrow" style="color:#bcb0ff">КООРДИНАЦИОННАЯ ХИМИЯ / ИНТЕРАКТИВНАЯ ЛАБОРАТОРИЯ</div>
- <h1>Что происходит <span>внутри квадратных скобок?</span></h1>
- <p class="hero-desc">Почему осадок исчезает, раствор меняет цвет, а ион металла удерживает вокруг себя шесть молекул? Разбираемся в химических связях, собираем собственные комплексы и проверяем их формулы.</p>
- <div class="hero-actions"><a class="btn" href="#electrons">Разобрать связь ↗</a><a class="btn ghost" href="#builder">Собрать комплекс →</a></div>
- <div class="hero-pills"><span>Донорно-акцепторная связь</span><span>Координационное число</span><span>Осадки и растворы</span><span>ЕГЭ: цепочки превращений</span></div>
- </div>
- <div class="hero-art" aria-label="Схема комплекса с центральным металлом и шестью лигандами">
- <div class="halo"></div>
- <svg viewBox="0 0 500 440" role="img" aria-label="Шесть лигандов окружают центральный ион кобальта">
- <defs><linearGradient id="gA" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#bda4ff"/><stop offset="1" stop-color="#587eff"/></linearGradient><radialGradient id="gB"><stop stop-color="#9889ff"/><stop offset="1" stop-color="#684cd2"/></radialGradient></defs>
- <ellipse cx="252" cy="221" rx="155" ry="83" stroke="#b7b1ff" stroke-width="1.5" fill="none" opacity=".32" transform="rotate(39 252 221)"/>
- <ellipse cx="252" cy="221" rx="155" ry="83" stroke="#b7b1ff" stroke-width="1.5" fill="none" opacity=".32" transform="rotate(-39 252 221)"/>
- <g stroke="url(#gA)" stroke-width="5" stroke-linecap="round"><path d="M253 196V100 M253 245V346 M228 210L139 143 M278 231L361 300 M228 230L130 294 M279 209L360 141"/></g>
- <g fill="#42357e" stroke="#aca1ed" stroke-width="2"><circle cx="253" cy="78" r="46"/><circle cx="253" cy="364" r="46"/><circle cx="115" cy="126" r="46"/><circle cx="386" cy="312" r="46"/><circle cx="113" cy="309" r="46"/><circle cx="391" cy="125" r="46"/></g>
- <g fill="#fff" font-size="25" text-anchor="middle" font-weight="700"><text x="253" y="86">NH₃</text><text x="253" y="372">NH₃</text><text x="115" y="134">NH₃</text><text x="386" y="320">NH₃</text><text x="113" y="317">NH₃</text><text x="391" y="133">NH₃</text></g>
- <circle cx="253" cy="220" r="65" fill="url(#gB)" stroke="#d4c4ff" stroke-width="2.6"/>
- <text x="253" y="230" font-size="33" fill="#fff" font-weight="800" text-anchor="middle">Co³⁺</text>
- </svg>
- <div class="hero-note">6 лигандов <em>→</em> 6 координационных связей</div>
- </div>
- </div>
-</section>
+<div class="wide hero-grid">
+<div>
+<div class="eyebrow" style="color:#c8c4ed">ХИМИЯ • ТЕОРИЯ, УРАВНЕНИЯ, САМОСТОЯТЕЛЬНАЯ РАБОТА</div>
+<h1>Комплексные <span>соединения</span></h1>
+<p class="hero-desc">Последовательное изучение координационных соединений: от строения электронной оболочки и неподелённых пар до формул комплексных ионов, химического равновесия и реакций с участием алюминия, цинка и переходных металлов.</p>
+<div class="hero-actions"><a class="btn" href="#structure">Изучить теорию</a><a class="btn ghost" href="#reactions">Разобрать уравнения</a></div>
+<div class="hero-pills"><span>11 класс</span><span>Строение вещества</span><span>Гидроксокомплексы Zn и Al</span><span>Подготовка к ЕГЭ 2027</span></div>
+</div>
+<div class="hero-art" aria-label="Схема октаэдрического комплекса с центральным ионом и шестью лигандами">
+<div class="halo"></div>
+<svg viewBox="0 0 500 440" role="img" aria-label="Схематический октаэдрический комплекс кобальта с шестью лигандами аммиака"><defs><radialGradient id="gB"><stop stop-color="#94a6d9"/><stop offset="1" stop-color="#42538f"/></radialGradient></defs>
+<g stroke="#a6b4dc" stroke-width="4" stroke-linecap="round" opacity=".85"><path d="M253 194V95 M253 246V350 M225 213L133 140 M275 230L374 304 M225 231L126 305 M278 210L365 139"/></g>
+<g fill="#303c74" stroke="#91a5d0" stroke-width="2"><circle cx="253" cy="77" r="47"/><circle cx="253" cy="365" r="47"/><circle cx="114" cy="122" r="47"/><circle cx="390" cy="315" r="47"/><circle cx="109" cy="311" r="47"/><circle cx="390" cy="122" r="47"/></g>
+<g fill="#f2f5ff" font-size="24" text-anchor="middle" font-weight="700"><text x="253" y="86">NH₃</text><text x="253" y="374">NH₃</text><text x="114" y="130">NH₃</text><text x="390" y="324">NH₃</text><text x="109" y="320">NH₃</text><text x="390" y="131">NH₃</text></g>
+<circle cx="253" cy="220" r="63" fill="url(#gB)" stroke="#c7d4ef" stroke-width="2"/><text x="253" y="230" font-size="33" fill="#fff" text-anchor="middle" font-weight="750">Co³⁺</text>
+</svg><div class="hero-note">[Co(NH₃)₆]³⁺ <em> · </em> КЧ = 6</div>
+</div></div></section>
 
-<section class="content" id="structure">
- <div class="wide">
- <div class="eyebrow"><span class="num">01</span> АНАТОМИЯ КОМПЛЕКСА</div>
- <h2>Один центр. Несколько лигандов. Новые свойства.</h2>
- <p class="section-intro">Комплексная частица образуется, когда центральный атом или ион связывает окружающие частицы - лиганды. Лиганды могут быть молекулами или ионами. В типичных примерах этой страницы центром выступает металл.</p>
- <div class="two">
- <article class="card highlight"><span class="inline-pill">Пример 01</span><h3>Катионный комплекс серебра</h3><div class="formula big">[Ag(NH₃)₂]⁺</div><p><b>Ag⁺</b> - центральный ион. Две молекулы <b>NH₃</b> - лиганды. Атомы азота предоставляют электронные пары для образования связей Ag-N.</p><div class="mini-cards" style="grid-template-columns:repeat(2,1fr)"><div class="mini"><b>+1</b><span>заряд иона</span></div><div class="mini"><b>2</b><span>координационное число</span></div></div></article>
- <article class="card blue"><span class="inline-pill">Пример 02</span><h3>Анионный комплекс алюминия</h3><div class="formula big">[Al(OH)₄]⁻</div><p><b>Al³⁺</b> - центр, <b>OH⁻</b> - четыре гидроксолиганда. Отрицательные заряды лигандов суммарно превышают положительный заряд центрального иона.</p><div class="mini-cards" style="grid-template-columns:repeat(2,1fr)"><div class="mini"><b>−1</b><span>заряд иона</span></div><div class="mini"><b>4</b><span>координационное число</span></div></div></article>
- </div>
- <div class="three topgap">
- <div class="card slim"><div class="tag">Комплексообразователь</div><h3>Кто в центре?</h3><p>Обычно ион металла: Ag⁺, Cu²⁺, Zn²⁺, Co³⁺, Fe²⁺. Он способен связывать лиганды. Центральным атомом может быть и нейтральная частица.</p></div>
- <div class="card slim"><div class="tag sky">Лиганд</div><h3>Кто вокруг?</h3><p>NH₃, H₂O, OH⁻, Cl⁻, CN⁻ и более сложные молекулы. Каждый лиганд предоставляет электронную пару через донорный атом.</p></div>
- <div class="card slim"><div class="tag mint">Координационная сфера</div><h3>Что в скобках?</h3><p>Центр и непосредственно связанные с ним лиганды. Ионы, которые только компенсируют заряд, записывают за квадратными скобками.</p></div>
- </div>
- <div class="card topgap"><h3>Три величины, которые часто путают</h3><div class="table-wrap"><table><thead><tr><th>Понятие</th><th>Что показывает</th><th>Пример</th></tr></thead><tbody><tr><td><b>Степень окисления</b></td><td>Формальный заряд центрального элемента при заданном распределении электронов.</td><td>В [Zn(OH)₄]²⁻ у Zn равна +2.</td></tr><tr><td><b>Заряд комплекса</b></td><td>Сумма степени окисления центра и формальных зарядов всех лигандов.</td><td>У [Zn(OH)₄]²⁻ равен −2.</td></tr><tr><td><b>Координационное число</b></td><td>Сколько донорных атомов непосредственно связано с центром.</td><td>У [Co(NH₃)₆]³⁺ равно 6.</td></tr></tbody></table></div></div>
- </div>
-</section>
+<section class="content ege-frame" id="ege-focus"><div class="wide">
+<div class="eyebrow"><span class="num">00</span> МЕСТО ТЕМЫ В ПОДГОТОВКЕ К ЕГЭ</div>
+<h2>Какие знания проверяются и где пригодится материал</h2>
+<p class="section-intro">Работа с комплексами связана со строением вещества, степенями окисления, химической связью, амфотерностью, ионными реакциями и прогнозированием продуктов. Уравнения гидроксокомплексов цинка и алюминия служат ключевым экзаменационным ориентиром.</p>
+<div class="two">
+<article class="card"><span class="tag">Проверяемый материал</span><h3>Основные экзаменационные навыки</h3><ul class="list-clean"><li>Объяснить механизм образования координационной связи и роль неподелённых электронных пар.</li><li>Рассчитать степень окисления центрального атома и заряд комплексного иона.</li><li>Составить реакции Al(OH)₃ и Zn(OH)₂ с избытком щёлочи, полные и сокращённые ионные уравнения.</li><li>Предсказать изменение осадка при недостатке или избытке реагента, не спутать его с ОВР.</li></ul></article>
+<article class="card"><span class="tag sky">Уровень углубления</span><h3>Дополнительные примеры для понимания</h3><p>Амминокомплексы Ag(I), Cu(II) и Co(III), смешанные лиганды, устойчивость и геометрия помогают раскрыть общую природу комплексообразования, но не заменяют обязательную тренировку гидроксокомплексов Al и Zn.</p><div class="keyline">Официальный навигатор ФИПИ по неорганической химии отдельно упоминает комплексообразование на примере гидроксокомплексов цинка и алюминия. Примеры ниже - авторские учебные задания, а не копии заданий ФИПИ.</div></article>
+</div>
+<p class="source-inline">Основание: <a href="https://doc.fipi.ru/navigator-podgotovki/navigator-ege/2026/hi-neorganicheskaja-himija.pdf" target="_blank" rel="noopener noreferrer">ФИПИ, навигатор подготовки: неорганическая химия</a>; <a href="https://fipi.ru/ege/demoversii-specifikacii-kodifikatory" target="_blank" rel="noopener noreferrer">демоверсии и кодификаторы ЕГЭ 2027</a>.</p>
+</div></section>
+<section class="content" id="structure"><div class="wide">
+<div class="eyebrow"><span class="num">01</span> ОСНОВНЫЕ ОПРЕДЕЛЕНИЯ</div>
+<h2>Что такое комплексное соединение?</h2>
+<p class="section-intro">В неорганической химии комплексными называют соединения, содержащие координационные частицы: центральный атом или ион связан с окружающими его лигандами. При этом комплексный ион может входить в состав соли, а в некоторых случаях вся координационная частица электрически нейтральна.</p>
+<div class="card theory-definition">
+<div class="eyebrow">ОПРЕДЕЛЕНИЕ</div>
+<p class="leadpoint">Комплексное соединение - химическое соединение, в составе которого имеется центральный атом (или ион) и связанные с ним лиганды, образующие внутреннюю координационную сферу.</p>
+<p class="muted">Связи центра с лигандами относятся к координационным, часто рассматриваемым в школьном курсе как ковалентные связи, возникающие по донорно-акцепторному механизму.</p></div>
+<div class="two topgap">
+<article class="card highlight"><h3>Пример 1. [Co(NH₃)₆]Cl₃</h3><div class="formula big">[Co(NH₃)₆]Cl₃</div>
+<div class="table-wrap"><table><tbody><tr><td>Комплексообразователь</td><td><b>Co³⁺</b></td></tr><tr><td>Лиганды</td><td><b>6 NH₃</b></td></tr><tr><td>Внутренняя сфера</td><td><b>[Co(NH₃)₆]³⁺</b></td></tr><tr><td>Внешняя сфера</td><td><b>3 Cl⁻</b></td></tr><tr><td>Координационное число</td><td><b>6</b></td></tr></tbody></table></div>
+<p class="small muted" style="margin-top:12px">Название: хлорид гексаамминкобальта(III).</p></article>
+<article class="card blue"><h3>Пример 2. Na[Al(OH)₄]</h3><div class="formula big">Na[Al(OH)₄]</div>
+<div class="table-wrap"><table><tbody><tr><td>Комплексообразователь</td><td><b>Al³⁺</b></td></tr><tr><td>Лиганды</td><td><b>4 OH⁻</b></td></tr><tr><td>Внутренняя сфера</td><td><b>[Al(OH)₄]⁻</b></td></tr><tr><td>Внешняя сфера</td><td><b>Na⁺</b></td></tr><tr><td>Координационное число</td><td><b>4</b></td></tr></tbody></table></div>
+<p class="small muted" style="margin-top:12px">Название: тетрагидроксоалюминат натрия. Растворимый гидроксокомплекс возникает в избытке щёлочи.</p></article>
+</div>
+<div class="three topgap">
+<div class="card slim"><div class="eyebrow">КОМПЛЕКСООБРАЗОВАТЕЛЬ</div><h3>Центральная частица</h3><p>Ион либо атом, принимающий электронную плотность лигандов. Для большинства школьных примеров - ион металла: Al³⁺, Zn²⁺, Ag⁺, Cu²⁺, Co³⁺.</p></div>
+<div class="card slim"><div class="eyebrow">ЛИГАНД</div><h3>Донорная частица</h3><p>Молекула или ион, содержащие один или несколько донорных атомов с электронной парой. Примеры: NH₃, H₂O, OH⁻, Cl⁻.</p></div>
+<div class="card slim"><div class="eyebrow">КООРДИНАЦИОННАЯ СФЕРА</div><h3>Центр и его окружение</h3><p>Частица внутри квадратных скобок. Ионы вне скобок называются противоионами и обеспечивают электронейтральность всей соли.</p></div></div>
+<div class="card topgap"><h3>Чем комплекс отличается от обычной соли?</h3><div class="two"><div><span class="tag">NaCl</span><p>При растворении обычной соли хлорида натрия получаются Na⁺ и Cl⁻.</p><div class="formula">NaCl → Na⁺ + Cl⁻</div></div><div><span class="tag sky">[Co(NH₃)₆]Cl₃</span><p>При диссоциации комплексной соли внутренняя сфера обычно сохраняется как целый комплексный ион.</p><div class="formula">[Co(NH₃)₆]Cl₃ → [Co(NH₃)₆]³⁺ + 3Cl⁻</div></div></div><p class="small muted">Комплексы также могут вступать в дальнейшие равновесия распада и обмена лигандов; их поведение зависит от устойчивости и условий.</p></div>
+</div></section>
 
 <section class="content" id="electrons">
  <div class="wide">
@@ -173,7 +181,7 @@
  <div class="wide"><div class="card dark"><div class="two" style="align-items:center"><div><div class="eyebrow" style="color:#c1b5ff">КОРОТКАЯ ПАМЯТКА</div><h2>Как читать незнакомый комплекс?</h2><p class="muted">Найди центр. Посчитай лиганды. Определи их заряды. Вычисли заряд комплекса. Проверь противоионы. Сравни число лигандов и координационное число.</p><div class="hero-actions"><button class="btn" id="copy-summary" type="button">Скопировать схему</button><button class="btn ghost" id="print-page" type="button">Распечатать</button></div></div><div><div class="formula big">[Co(NH₃)₆]Cl₃</div><div class="formula">Co(+3) + 6NH₃(0) → заряд +3</div><div class="formula">Комплекс +3 + 3Cl⁻ → соль 0</div><p class="small muted">Полезно на проверке: уравнение должно сохранять число атомов и общий заряд.</p></div></div></div></div>
 </section>
 </main>
-<footer class="footer"><div class="wide two"><div><b style="font-size:20px">Внутри скобок.</b><p>Интерактивные объяснения, примеры и задачи по координационной химии.</p><p>Для преподавателя: демонстрации с аммиачными растворами серебра, кобальтом, соединениями цианида и другими опасными реагентами здесь приведены только в теории. Не проводите их дома.</p></div><div><b>Для дальнейшей проверки</b><p><a href="https://fipi.ru/ege" target="_blank" rel="noopener noreferrer">ФИПИ: ЕГЭ и официальные материалы</a><br><a href="https://iupac.qmul.ac.uk/Red_Book/" target="_blank" rel="noopener noreferrer">IUPAC: номенклатура неорганических соединений</a></p><p>Все задания работают прямо в браузере, без передачи введённых ответов на сервер.</p></div></div></footer>
+<footer class="footer"><div class="wide two"><div><b style="font-size:20px">Комплексные соединения</b><p>Электронная структура, координационная связь, реакции и задания для подготовки к ЕГЭ по химии. Учебный материал с интерактивной проверкой.</p><p>Превращения с соединениями серебра, кобальта, цианидными комплексами и другими потенциально опасными веществами рассматриваются только теоретически и не предназначены для самостоятельных домашних опытов.</p></div><div><b>Нормативные и справочные источники</b><p><a href="https://fipi.ru/ege/demoversii-specifikacii-kodifikatory" target="_blank" rel="noopener noreferrer">ФИПИ: ЕГЭ 2027, демоверсии и кодификаторы</a><br><a href="https://doc.fipi.ru/navigator-podgotovki/navigator-ege/2026/hi-neorganicheskaja-himija.pdf" target="_blank" rel="noopener noreferrer">ФИПИ: неорганическая химия</a><br><a href="https://iupac.qmul.ac.uk/Red_Book/" target="_blank" rel="noopener noreferrer">IUPAC: номенклатура</a></p><p>Результаты тестов не передаются на сервер.</p></div></div></footer>
 <div class="floating-note" id="toast" role="status"></div>
 <script src="app.js" defer></script>
 </body></html>
