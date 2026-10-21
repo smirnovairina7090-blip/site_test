@@ -12,3 +12,95 @@ details{border:1px solid var(--line);border-radius:16px;background:#fff;margin:1
 @media(max-width:950px){.hero-grid{grid-template-columns:1fr 1fr}.hero-art{min-height:350px}.three,.mini-cards{grid-template-columns:repeat(2,1fr)}.topnav{gap:0}.topnav a{font-size:12px;padding:8px}.hero h1{font-size:47px}.hero{padding:65px 0}}
 @media(max-width:700px){body{font-size:15px}.wide{padding:0 16px}.hero{padding:57px 0}.hero-grid,.two,.three,.reactions-grid,.learn-route{grid-template-columns:1fr}.hero-art{min-height:310px}.hero-art .halo{width:290px;height:290px}.hero h1{font-size:43px}.hero-desc{font-size:16px}.hero-note{right:12px;bottom:0}.card{padding:22px}.mini-cards{grid-template-columns:repeat(2,1fr)}section.content{padding:66px 0 0}.top-inner{min-height:64px;flex-wrap:wrap}.nav-toggle{display:inline-flex}.topnav{display:none;flex-basis:100%;padding:6px 0 14px;gap:4px;flex-wrap:wrap}.topnav.open{display:flex}.topnav a{font-size:13px}.builder .formrow{grid-template-columns:1fr}.builder-notes{grid-template-columns:repeat(3,1fr)}.process{flex-wrap:wrap}.process .pipe{display:none}.process .tile{min-width:44%}.formula{white-space:normal;overflow-wrap:anywhere}}
 @media print{.topbar,.hero-actions,.quiz-shell,.footer,.floating-note,.builder button,.case-tabs,.nav-toggle{display:none!important}.hero{padding:24px 0;background:white;color:#1c1935}.hero h1 span{color:#6b49c9}.hero-desc{color:#494463}.hero-art{display:none}body{background:white;color:#111}section.content{padding:25px 0 0}.card{box-shadow:none;break-inside:avoid}.two,.three{grid-template-columns:1fr 1fr}.print-only{display:block}}
+
+/* Editorial treatment for structured EGE chemistry material */
+:root{--ink:#212d41;--muted:#5e6a7c;--purple:#465a97;--violet:#6575a7;--blue:#326a9b;--sky:#edf2f8;--lime:#348d84;--gold:#9a7344;--bg:#f5f6f9;--paper:#fff;--line:#dce2eb;--r:15px;--shadow:0 5px 20px rgba(20,35,61,.035)}
+body{font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;line-height:1.68}
+h1,h2,h3{letter-spacing:-.025em}
+.topbar{background:rgba(255,255,255,.96)}
+.logo{background:#1b355e;border-radius:7px;font-size:15px;box-shadow:none;font-weight:850}
+.brand{font-size:17px}
+.topnav a{color:#54617a}
+.topnav a:hover,.topnav a.active{background:#ebeff7;color:#284f85}
+.progress-track{background:#e6ebf3}
+.progress-track i{background:#45679c}
+.hero{background:linear-gradient(115deg,#172844,#233957);padding:72px 0 68px}
+.hero:before{opacity:.14;background:radial-gradient(circle,#6984ba,transparent 65%)}
+.hero:after{opacity:.2}
+.hero h1{letter-spacing:-.035em;line-height:1.12}
+.hero h1 span{color:#a9c2f1}
+.hero-desc{color:#d5e0f2}
+.hero-pills span{background:#ffffff0d;border:1px solid #ffffff30;color:#dfe8f7}
+.hero-art .halo{box-shadow:none}
+.hero-note{border-radius:9px;color:#243857}
+.hero-note em{color:#4c71a3}
+.btn{background:#365f99;border-radius:9px;box-shadow:none;font-weight:700}
+.btn.ghost{background:transparent;border-color:#c9d6ed66}
+.btn.soft{background:#edf2fa;color:#345b92}
+.btn.outline{border-color:#c8d4e5;color:#355d96}
+.card{box-shadow:var(--shadow)}
+.card.highlight{background:#f9fbff;border-color:#dce6f3}
+.card.blue{background:#fcfdff}
+.card.dark{background:#203553;border-color:#203553}
+.card.dark .formula{background:#ffffff12}
+.inline-pill,.tag{background:#eaf0f7;color:#335b91;border-radius:6px}
+.tag.sky{background:#e8f0f9;color:#315f98}
+.tag.mint{background:#e9f3f0;color:#2b756e}
+.tag.sun{background:#f5efe4;color:#7c6040}
+.eyebrow{color:#40628c;letter-spacing:.13em}
+.num{background:#e9f0f8;color:#36598f;border-radius:5px}
+.keyline{background:#eef3fa;border-left-color:#4c73a7;color:#304865;border-radius:0 6px 6px 0}
+.formula{background:#f3f6fa;border:1px solid #e0e7f0;color:#253b5a;border-radius:7px}
+.atomic-chart,.electron-panel{background:#fafbfe}
+.orb{color:#46649c;border-color:#becbe0}
+.orb.blue{color:#3763a5}
+.orb.purple{color:#46649c}
+.switcher button{border-radius:7px;background:#f2f5f9}
+.switcher button.selected{background:#385e97;border-color:#385e97}
+.stepnum,.step-num{border-radius:6px;background:#e9f0f9;color:#355b95}
+.mini{background:#fafbfe;border-radius:9px}
+.mini b{color:#385a90}
+.table-wrap{border-radius:11px}
+th{background:#eaf0f7;color:#2c466b}
+details{border-radius:9px}
+details[open] summary{background:#f1f5fb}
+details summary:after{color:#3c699e}
+.builder{background:#263b5d;border-radius:16px}
+.builder-preview{background:linear-gradient(145deg,#34496f,#33466a);border-color:#637a9d;border-radius:11px}
+.builder select{background:#334a70;border-color:#6b81a2}
+.builder-notes>div{border-radius:8px}
+.reaction-card .step-title{color:#426b9c}
+.reaction-card .observation{background:#edf3f8;color:#405571}
+.case-tabs button{border-radius:7px}
+.case-tabs button.on{background:#365e94;border-color:#365e94}
+.choice{border-radius:7px}
+.choice:hover{border-color:#859fc3;background:#f2f6fc}
+.choice.sel{border-color:#476da2;background:#edf2fa}
+.quiz-meter i{background:#416ea6}
+.quiz-score{color:#45679a}
+.quiz-feedback{background:#eaf0f8;color:#35527a}
+.footer{background:#192b46}
+.theory-definition{border-left:5px solid #4b6c9c;background:#fdfefe}
+.leadpoint{font-size:19px;color:#263954}
+.source-inline{font-size:13px;color:#607084;margin:16px 0 0}
+.source-inline a{color:#315d96;text-decoration:underline;text-underline-offset:3px}
+.training-sets{margin:24px 0 30px}
+.task-collection{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.task-collection .card{display:flex;flex-direction:column;gap:4px;box-shadow:none}
+.task-collection h4{font-size:17px}
+.task-collection .card .tag{align-self:start}
+.task-collection details{margin-top:auto}
+.task-collection details .reveal{color:#34465f}
+.dosage-card{background:#fff;border-top:3px solid #5375a2}
+.dosage-card label{display:block;margin-bottom:7px}
+.dosage-output{padding:19px;border:1px solid #dce5ee;border-radius:10px;background:#f7f9fd;margin-top:19px}
+.dosage-output p{color:#506178}
+.dosage-card select{margin-bottom:10px;border-radius:7px}
+.quiz-shell{border-radius:12px}
+@media(max-width:760px){
+.hero{padding:50px 0}
+.hero h1{font-size:clamp(35px,9vw,47px)}
+.task-collection{grid-template-columns:1fr}
+.ege-frame{padding-top:55px!important}
+}
+@media print{.hero{background:#fff;color:#152c4e}.hero-desc{color:#354a68}.hero h1 span{color:#395b8a}.task-collection{grid-template-columns:1fr 1fr}.builder{background:#e8eef7;color:#253b57}.builder .bigform{color:#253b57}}
