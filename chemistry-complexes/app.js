@@ -102,10 +102,11 @@ var questions=[
 {q:"Какова степень окисления Pt в K₂[PtCl₆]?",o:["+2","+3","+4","+6"],a:2,e:"Заряд [PtCl₆]²⁻ равен −2. x−6=−2, следовательно x=+4."},
 {q:"Как классифицировать [Pt(NH₃)₂Cl₂] при Pt(+2)?",o:["Катионный","Анионный","Нейтральный","Это ион водорода"],a:2,e:"+2 от Pt и −2 от двух Cl⁻ компенсируются, NH₃ нейтрален. Общий заряд 0."}
 ];
+questions.push(...[{"q":"В раствор, содержащий 0,10 моль AlCl₃, добавили избыток NaOH. Сколько молей NaOH нужно для получения [Al(OH)₄]⁻ по суммарному уравнению?","o":["0,10 моль","0,20 моль","0,30 моль","0,40 моль"],"a":3,"e":"На 1 моль Al³⁺ нужно 4 моль OH⁻, поэтому 0,10 × 4 = 0,40 моль NaOH."},{"q":"Какое сокращённое ионное уравнение описывает растворение осадка Zn(OH)₂ в избытке щёлочи?","o":["Zn(OH)₂ + 2OH⁻ → [Zn(OH)₄]²⁻","Zn(OH)₂ + OH⁻ → [Zn(OH)₃]⁻","Zn²⁺ + OH⁻ → ZnOH⁺","Zn(OH)₂ → ZnO + H₂O"],"a":0,"e":"Zn(OH)₂ амфотерен. Два дополнительных OH⁻ формируют комплексный ион [Zn(OH)₄]²⁻."},{"q":"Какая из реакций является окислительно-восстановительной?","o":["Al(OH)₃ + NaOH → Na[Al(OH)₄]","ZnO + 2NaOH + H₂O → Na₂[Zn(OH)₄]","2Al + 2NaOH + 6H₂O → 2Na[Al(OH)₄] + 3H₂","AgCl + 2NH₃ ⇌ [Ag(NH₃)₂]⁺ + Cl⁻"],"a":2,"e":"Металлический Al окисляется от 0 до +3, а H(+1) восстанавливается до H₂(0)."},{"q":"Какова суммарная масса NaOH для полного превращения 0,05 моль ZnCl₂ в Na₂[Zn(OH)₄]?","o":["2 г","4 г","6 г","8 г"],"a":3,"e":"На каждый Zn²⁺ требуются 4 OH⁻: n(NaOH) = 0,05 × 4 = 0,20 моль, m = 0,20 × 40 = 8 г."},{"q":"Что будет при осторожном добавлении H⁺ к раствору [Al(OH)₄]⁻ до области осаждения Al(OH)₃?","o":["Выделится металлический Al","Сразу образуется Al₂O₃","Образуется Al(OH)₃↓ и H₂O","Восстановится Al³⁺ до Al²⁺"],"a":2,"e":"[Al(OH)₄]⁻ + H⁺ → Al(OH)₃↓ + H₂O. При дальнейшем подкислении гидроксид опять растворится."},{"q":"Какая запись верно описывает действие NaOH на Al₂O₃ в водном растворе?","o":["Al₂O₃ + NaOH → Al(OH)₃ + Na","Al₂O₃ + 2NaOH + 3H₂O → 2Na[Al(OH)₄]","Al₂O₃ + 2NaOH → 2Al + Na₂O","Al₂O₃ + NaOH → AlH₃ + NaO₂"],"a":1,"e":"Для водного раствора запись через тетрагидроксоалюминат учитывает взаимодействие с водой."}]);
 var index=0,selected=null,answers=[],isChecked=false;
 function renderQuiz(){
 var slot=$("#quiz-zone");if(!slot)return;
-if(index>=questions.length){var good=answers.filter(Boolean).length;slot.innerHTML='<div class="quiz-score">'+good+' / '+questions.length+'</div><h3>'+(good>=18?"Отличное понимание!":good>=14?"Очень хороший результат":"Продолжим тренироваться")+'</h3><p class="muted">Ты прошёл все 20 вопросов. Ошибки можно разобрать по объяснениям в задачах, затем повторить тест.</p><button id="quiz-restart" class="btn">Пройти ещё раз</button>';$("#quiz-restart").addEventListener("click",function(){index=0;selected=null;answers=[];isChecked=false;renderQuiz()});$("#quiz-progress").style.width="100%";$("#quiz-position").textContent="20 из 20";return}
+if(index>=questions.length){var good=answers.filter(Boolean).length;slot.innerHTML='<div class="quiz-score">'+good+' / '+questions.length+'</div><h3>'+(good>=Math.ceil(questions.length*.9)?"Отличное понимание":good>=Math.ceil(questions.length*.7)?"Хороший результат":"Повтори разделы с ошибками")+'</h3><p class="muted">Ты прошёл все 20 вопросов. Ошибки можно разобрать по объяснениям в задачах, затем повторить тест.</p><button id="quiz-restart" class="btn">Пройти ещё раз</button>';$("#quiz-restart").addEventListener("click",function(){index=0;selected=null;answers=[];isChecked=false;renderQuiz()});$("#quiz-progress").style.width="100%";$("#quiz-position").textContent=questions.length+" из "+questions.length;return}
 var q=questions[index];$("#quiz-position").textContent=(index+1)+" из "+questions.length;$("#quiz-progress").style.width=(index/questions.length*100)+"%";
 var html='<div class="quiz-top"><span class="tag">'+(index<7?"Разминка":index<14?"Применение":"Продвинутый уровень")+'</span><span class="small muted">Правильных: '+answers.filter(Boolean).length+'</span></div><h3>'+q.q+'</h3><div class="choices">';
 q.o.forEach(function(v,i){var classes="choice"+(selected===i?" sel":"")+(isChecked&&i===q.a?" correct":"")+(isChecked&&selected===i&&i!==q.a?" wrong":"");html+='<button type="button" class="'+classes+'" data-choice="'+i+'" '+(isChecked?"disabled":"")+'><span class="letter">'+String.fromCharCode(65+i)+'</span><span>'+v+'</span></button>'});
@@ -126,4 +127,25 @@ var taskChecks={
 $$("[data-check]").forEach(function(btn){btn.addEventListener("click",function(){var key=btn.dataset.check,obj=taskChecks[key],input=$('[data-input="'+key+'"]'),reply=$('[data-result="'+key+'"]');if(!obj||!input||!reply)return;var v=input.value.trim().replace(/,/g,".").replace(/\s/g,"").replace(/−/g,"-").replace(/\+/g,"");var good=Number(v)===Number(obj.answer)&&v!=="";reply.textContent=(good?"Верно. ":"Пока неверно. ")+obj.explain;reply.style.color=good?"#147c65":"#a34a60"})});
 var toast=$("#toast");if($("#copy-summary"))$("#copy-summary").addEventListener("click",function(){var s="Комплекс: центральный атом + лиганды. Донор - лиганд с электронной парой; акцептор - металл. Заряд комплекса = степень окисления центра + сумма зарядов лигандов. [Ag(NH₃)₂]⁺: +1. [Al(OH)₄]⁻: -1. [Zn(OH)₄]²⁻: -2. [Co(NH₃)₆]³⁺: +3. Координационное число равно числу донорных атомов.";if(navigator.clipboard){navigator.clipboard.writeText(s).then(function(){if(toast){toast.textContent="Краткая схема скопирована";toast.classList.add("visible");setTimeout(function(){toast.classList.remove("visible")},2200)}})}});
 if($("#print-page"))$("#print-page").addEventListener("click",function(){window.print()});
+
+var dosageMetal=$("#dosage-metal"),dosageStage=$("#dosage-stage");
+if(dosageMetal&&dosageStage){
+var conditions={
+al:{
+insufficient:{tag:"Образуется Al(OH)₃, часть Al³⁺ остаётся в растворе",eq:"Al³⁺ + 3OH⁻ → Al(OH)₃↓",ionic:"Al³⁺ + 3OH⁻ → Al(OH)₃↓",info:"Недостаток OH⁻ не позволяет осадить весь алюминий. Локально образуются порции Al(OH)₃."},
+precipitate:{tag:"Образование белого осадка",eq:"AlCl₃ + 3NaOH → Al(OH)₃↓ + 3NaCl",ionic:"Al³⁺ + 3OH⁻ → Al(OH)₃↓",info:"В идеализированной стехиометрической модели 3 моль NaOH на 1 моль AlCl₃ приводят к осаждению Al(OH)₃."},
+excess:{tag:"Растворение в избытке щёлочи",eq:"Al(OH)₃ + NaOH → Na[Al(OH)₄]",ionic:"Al(OH)₃ + OH⁻ → [Al(OH)₄]⁻",info:"Избыточный OH⁻ способствует образованию растворимого гидроксокомплекса [Al(OH)₄]⁻."}
+},zn:{
+insufficient:{tag:"Образуется Zn(OH)₂, часть Zn²⁺ остаётся в растворе",eq:"Zn²⁺ + 2OH⁻ → Zn(OH)₂↓",ionic:"Zn²⁺ + 2OH⁻ → Zn(OH)₂↓",info:"При недостатке OH⁻ возможно лишь частичное осаждение ионов Zn²⁺."},
+precipitate:{tag:"Образование белого осадка",eq:"ZnSO₄ + 2NaOH → Zn(OH)₂↓ + Na₂SO₄",ionic:"Zn²⁺ + 2OH⁻ → Zn(OH)₂↓",info:"На 1 моль Zn²⁺ требуется 2 моль OH⁻ для образования Zn(OH)₂."},
+excess:{tag:"Растворение в избытке щёлочи",eq:"Zn(OH)₂ + 2NaOH → Na₂[Zn(OH)₄]",ionic:"Zn(OH)₂ + 2OH⁻ → [Zn(OH)₄]²⁻",info:"Избыток щёлочи приводит к образованию растворимого тетрагидроксоцинкат-иона."}
+}};
+function renderDosage(){var x=conditions[dosageMetal.value][dosageStage.value];
+$("#dosage-out-tag").textContent=x.tag;
+$("#dosage-out-eq").textContent=x.eq;
+$("#dosage-out-ionic").textContent=x.ionic;
+$("#dosage-out-info").textContent=x.info;}
+dosageMetal.addEventListener("change",renderDosage);dosageStage.addEventListener("change",renderDosage);renderDosage();
+}
+
 })();
