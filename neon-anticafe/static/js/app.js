@@ -1,4 +1,4 @@
-/* NEON DEN: frontend interacts with a real Python/Flask JSON API. */
+/* NEON DEN website: API-driven booking and ordering. */
 (() => {
   'use strict';
   const $ = (selector) => document.querySelector(selector);
@@ -19,7 +19,7 @@
   async function api(path, options = {}) {
     let response;
     try { response = await fetch(path, { headers: {'Content-Type': 'application/json'}, ...options }); }
-    catch { throw new Error('Не удалось связаться с Python-сервером. Попробуй ещё раз.'); }
+    catch { throw new Error('Не удалось подключиться. Попробуй ещё раз.'); }
     let data;
     try { data = await response.json(); } catch { throw new Error('Сервер вернул неожиданный ответ.'); }
     if (!response.ok) throw new Error(data.error || `Ошибка сервера ${response.status}`);
@@ -37,7 +37,7 @@
     state.slot = getSlot();
     const button = $('#checkSeats');
     button.disabled = true;
-    $('#availabilityStatus').textContent = 'Запрашиваем данные у Python-сервера…';
+    $('#availabilityStatus').textContent = 'Проверяем свободные места…';
     try {
       const query = new URLSearchParams(state.slot);
       const {seats} = await api(`/api/availability?${query}`);
@@ -153,7 +153,7 @@
       const data = await api('/api/orders',{method:'POST',body:JSON.stringify({guest: $('#orderGuest').value.trim() || 'Гость',promo: $('#promoCode').value.trim(),items})});
       state.cart = {};
       updateCart();
-      showResult('ЗАКАЗ ПРИНЯТ!', `${data.items.length} позиции · итого ${formatMoney(data.total)} · скидка ${formatMoney(data.quote.discount)} · начислено ${data.quote.points} XP. Сумму рассчитал Python!`, data.code);
+      showResult('ЗАКАЗ ПРИНЯТ!', `${data.items.length} позиции · итого ${formatMoney(data.total)} · скидка ${formatMoney(data.quote.discount)} · начислено ${data.quote.points} XP. Бонусы уже начислены!`, data.code);
       $('#promoCode').value = '';
     } catch(err){toast(err.message,true);}
     finally{button.disabled = false;}
@@ -206,7 +206,7 @@
       refreshSeats();
     } catch(error) {
       $('#menuGrid').innerHTML = `<div class="station-card" style="grid-column:1/-1"><h3>СЕРВЕР НЕДОСТУПЕН</h3><p>${escapeHTML(error.message)}</p></div>`;
-      $('#stationGrid').innerHTML = '<div class="station-card" style="grid-column:1/-1">Запусти Python-сервер, чтобы проверить бронирования.</div>';
+      $('#stationGrid').innerHTML = '<div class="station-card" style="grid-column:1/-1">Временно не удаётся загрузить игровые места. Обнови страницу.</div>';
       $('#availabilityStatus').textContent = 'Сервер не отвечает';
       toast(error.message,true);
     }
