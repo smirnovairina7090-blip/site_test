@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#101017">
+  <meta name="description" content="NEON DEN - интернет-антикафе нового уровня. Бронируй игровое место и собирай свой идеальный заказ в баре.">
+  <title>NEON DEN / play. sip. repeat.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Unbounded:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <script src="{{ url_for('static', filename='js/app.js') }}" defer></script>
+</head>
+<body>
+  <div class="top-glow" aria-hidden="true"></div>
+  <div class="noise" aria-hidden="true"></div>
+  <header class="header" id="top">
+    <div class="container header-inner">
+      <a class="brand" href="#top" aria-label="NEON DEN, на главную"><span class="brand-icon">✳</span><span>NEON<span class="brand-outlined">DEN</span></span><small>CYBER SPACE</small></a>
+      <nav class="nav" aria-label="Основная навигация">
+        <a href="#about">О пространстве</a><a href="#stations">Игровые зоны</a><a href="#menu">Неон-бар</a><a href="#how">Как это работает</a>
+      </nav>
+      <div class="header-actions"><span class="open-pill"><span class="live-dot"></span> НА СВЯЗИ · 24/7</span><a class="header-book" href="#stations">Забронировать <span>↗</span></a></div>
+      <button class="mobile-menu" id="mobileMenu" type="button" aria-label="Открыть меню" aria-expanded="false">☰</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero container" aria-labelledby="hero-title">
+      <div class="hero-content">
+        <div class="eyebrow"><span class="eyebrow-star">✳</span> ТВОЯ ТОЧКА ВХОДА В НОВУЮ РЕАЛЬНОСТЬ <span class="eyebrow-line"></span> 001</div>
+        <h1 id="hero-title">ПОДКЛЮЧАЙСЯ<br><span class="hero-lime">К СВОИМ.</span><br><span class="hero-outline">ЗАВИСАЙ.</span></h1>
+        <p class="hero-copy">Мощные компы. Атмосфера на максималках. Кофе, который заряжает лучше любого буста. Добро пожаловать в своё место.</p>
+        <div class="hero-buttons"><a class="btn btn-lime" href="#stations">ВЫБРАТЬ СВОЁ МЕСТО <span class="arrow-circle">↗</span></a><a class="btn btn-transparent" href="#about"><span class="play-circle">▶</span> ИССЛЕДОВАТЬ ПРОСТРАНСТВО</a></div>
+        <div class="hero-trust"><div class="avatars"><span>👾</span><span>🎧</span><span>🎮</span><span>⚡</span></div><p><strong>+100 к настроению</strong><br> <span>когда ты в NEON DEN</span></p></div>
+      </div>
+      <div class="hero-art" aria-label="Иллюстрация неонового игрового пространства">
+        <div class="hero-grid"></div>
+        <div class="orb orb-one"></div><div class="orb orb-two"></div>
+        <div class="floating-tag floating-tag-top"><span>✳</span><div><small>ТВОЙ УРОВЕНЬ</small><b>UNLIMITED</b></div></div>
+        <div class="gaming-scene">
+          <div class="monitor-back"></div>
+          <div class="monitor"><div class="monitor-screen"><div class="monitor-grid"></div><div class="monitor-caption">WELCOME TO</div><div class="monitor-logo">NEON<br><em>DEN</em><span class="monitor-glitch">_</span></div><div class="monitor-bottom">PRESS START <span>↗</span></div><div class="visual-circle ring-a"></div><div class="visual-circle ring-b"></div></div><div class="monitor-bezel"><span>✳ NEON DEN</span><i></i></div></div>
+          <div class="monitor-neck"></div><div class="monitor-base"></div>
+          <div class="desk"></div>
+          <div class="keyboard"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+          <div class="mouse"></div><div class="coffee-cup"><div class="cup-lid"></div><div class="cup-body">✳<small>BYTE<br>BREW</small></div></div>
+        </div>
+        <div class="floating-tag floating-tag-bottom"><span class="pulse-bars">▂▅▃▇▂▆</span><div><small>НАСТРОЕНИЕ</small><b>100% CHARGED</b></div></div>
+        <div class="hero-art-corner">PLAY / SIP / REPEAT <span>↘</span></div>
+      </div>
+      <div class="hero-down"><span>SCROLL TO EXPLORE</span><span class="down-arrow">↓</span></div>
+    </section>
+
+    <div class="ticker" aria-hidden="true"><div class="ticker-track"><span>GAME ON ✳ COFFEE UP ✳ NO PAUSE ✳ GOOD VIBES ONLY ✳ LEVEL UP YOUR DAY ✳&nbsp;&nbsp;&nbsp; GAME ON ✳ COFFEE UP ✳ NO PAUSE ✳ GOOD VIBES ONLY ✳ LEVEL UP YOUR DAY ✳</span></div></div>
+
+    <section class="about section container" id="about">
+      <div class="section-top"><span class="section-index">[ 01 / О НАС ]</span><span class="section-kicker">НЕ ПРОСТО ИНТЕРНЕТ-КАФЕ</span></div>
+      <div class="about-layout"><div><h2 class="section-title">ТВОЙ<br>РЕЖИМ <em>ON.</em></h2></div><div class="about-side"><p>Пространство, где можно катать с друзьями до победного, залипнуть в любимую игру, переключиться после учёбы или просто найти своих.</p><a href="#stations" class="text-link">ПОСМОТРЕТЬ ЗОНЫ <span>↗</span></a></div></div>
+      <div class="features-grid">
+        <div class="feature feature-green"><div class="feature-icon">⌘</div><div class="feature-number">01 / EXPERIENCE</div><h3>ЖЕЛЕЗО<br>НА МАКСИМУМ</h3><p>Игровые станции, комфортные кресла и скорость без компромиссов.</p><div class="feature-decoration">01</div></div>
+        <div class="feature feature-purple"><div class="feature-icon">✳</div><div class="feature-number">02 / COMMUNITY</div><h3>ЛЮДИ<br>НА ОДНОЙ ВОЛНЕ</h3><p>Собирай команду, знакомься и создавай свои любимые моменты.</p><div class="feature-decoration">02</div></div>
+        <div class="feature feature-orange"><div class="feature-icon">↗</div><div class="feature-number">03 / ENERGY</div><h3>БАР<br>С ХАРАКТЕРОМ</h3><p>Авторские напитки и перекусы для настоящей подзарядки.</p><div class="feature-decoration">03</div></div>
+      </div>
+    </section>
+
+    <section class="stations-section section" id="stations">
+      <div class="container">
+        <div class="section-top"><span class="section-index">[ 02 / ИГРОВЫЕ ЗОНЫ ]</span><span class="section-kicker">ВЫБЕРИ СВОЙ СЕТАП</span></div>
+        <div class="section-heading-row"><h2 class="section-title">ЗАБРОНИРУЙ<br><em>СВОЙ СПОТ.</em></h2><p class="heading-aside">Твоя следующая катка начинается здесь. Выбери время, проверь свободные места и забронируй за пару кликов.</p></div>
+        <div class="booking-panel"><div class="booking-field"><label for="bookingDate">01 / ДАТА</label><input id="bookingDate" type="date" required></div><div class="booking-field"><label for="bookingTime">02 / ВРЕМЯ НАЧАЛА</label><select id="bookingTime"><option value="12:00">12:00</option><option value="14:00">14:00</option><option value="16:00">16:00</option><option value="18:00" selected>18:00</option><option value="20:00">20:00</option><option value="22:00">22:00</option></select></div><div class="booking-field"><label for="bookingHours">03 / СКОЛЬКО ИГРАЕМ</label><select id="bookingHours"><option value="1">1 час</option><option value="2" selected>2 часа</option><option value="3">3 часа</option><option value="4">4 часа</option></select></div><button class="btn btn-pink" id="checkSeats" type="button">ПРОВЕРИТЬ МЕСТА <span>↗</span></button></div>
+        <div class="station-status"><span class="live-dot"></span><span id="availabilityStatus" aria-live="polite">Проверяем доступность мест…</span><span id="availableCount" class="count-chip">···</span></div>
+        <div class="station-grid" id="stationGrid"><div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div></div>
+        <div class="booking-footnote"><span>✳</span> Бронирования в этой версии демонстрационные. Никакой оплаты или личных контактов не требуется. <button type="button" id="findBooking" class="inline-link">Проверить бронь по коду ↗</button></div>
+      </div>
+    </section>
+
+    <section class="menu-section section container" id="menu"><div class="section-top"><span class="section-index">[ 03 / NEON BAR ]</span><span class="section-kicker">ПОДЗАРЯДКА ДЛЯ ТВОЕГО ДНЯ</span></div>
+      <div class="section-heading-row"><h2 class="section-title">ПЕРЕКУСИ.<br><em>ЗАРЯДИСЬ.</em></h2><p class="heading-aside">У нас своя формула идеального вечера: хорошая компания + яркий вкус + любимая игра.</p></div>
+      <div class="menu-toolbar"><div class="filters" id="menuFilters"><button type="button" class="filter active" data-filter="all">ВСЁ МЕНЮ</button><button type="button" class="filter" data-filter="coffee">КОФЕ И МАТЧА</button><button type="button" class="filter" data-filter="cold">ХОЛОДНЫЕ</button><button type="button" class="filter" data-filter="snack">ПЕРЕКУСЫ</button></div><button class="cart-button" type="button" id="cartOpen">МОЯ КОРЗИНА <span class="cart-counter" id="cartCount">0</span> ↗</button></div>
+      <div class="menu-grid" id="menuGrid"><div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div></div>
+    </section>
+
+    <section class="steps-section section" id="how"><div class="container"><div class="section-top"><span class="section-index">[ 04 / КАК ЭТО РАБОТАЕТ ]</span><span class="section-kicker">ВСЁ ПРОСТО</span></div><h2 class="section-title">3 ШАГА<br>ДО <em>КАЙФА.</em></h2><div class="steps-grid"><div class="step"><span class="step-number">01</span><div class="step-symbol">⌖</div><h3>ВЫБЕРИ МЕСТО</h3><p>Найди идеальную зону для своего настроения.</p></div><div class="step"><span class="step-number">02</span><div class="step-symbol">↗</div><h3>ЗАБРОНИРУЙ</h3><p>Укажи время и получи персональный код брони.</p></div><div class="step"><span class="step-number">03</span><div class="step-symbol">✳</div><h3>ЛОВИ МОМЕНТ</h3><p>Заказывай напиток и переходи в игровой режим.</p></div></div></div></section>
+
+    <section class="last-cta container"><div class="last-cta-inner"><span class="cta-star">✳</span><span class="cta-eyebrow">READY PLAYER ONE?</span><h2>ПОРА<br><em>НАЖАТЬ START.</em></h2><p>Твоё место уже ждёт тебя.</p><a class="btn btn-dark" href="#stations">ЗАБРОНИРОВАТЬ СЕЙЧАС <span>↗</span></a><div class="cta-bottom"># YOUR SPACE. YOUR RULES. YOUR GAME.</div></div></section>
+  </main>
+
+  <footer class="footer"><div class="container footer-main"><div><a class="brand footer-brand" href="#top"><span class="brand-icon">✳</span><span>NEON<span class="brand-outlined">DEN</span></span></a><p>Играй. Общайся. Возвращайся.</p></div><div class="footer-right"><a href="#stations">ЗОНЫ</a><a href="#menu">НЕОН-БАР</a><a href="#about">О НАС</a></div></div><div class="container footer-bottom"><span>© NEON DEN / 2026</span><span>DEMO PROJECT · MADE WITH <strong>PYTHON</strong> & CREATIVITY</span><span>PLAY. SIP. REPEAT.</span></div></footer>
+
+  <button id="floatingCart" class="floating-cart" type="button" aria-label="Открыть корзину">🛒 <span id="floatingCartCount">0</span></button>
+  <div class="overlay" id="overlay" hidden></div>
+  <aside class="drawer" id="cartDrawer" role="dialog" aria-modal="true" aria-labelledby="drawerTitle" hidden><div class="drawer-head"><div><small>NEON BAR / CHECKOUT</small><h2 id="drawerTitle">ТВОЯ <em>КОРЗИНА.</em></h2></div><button class="icon-btn" id="closeCart" type="button" aria-label="Закрыть">×</button></div><div class="cart-items" id="cartItems"></div><div class="drawer-bottom"><div class="total-row"><span>ИТОГО</span><strong id="cartTotal">0 ₽</strong></div><label class="small-label" for="orderGuest">КАК К ТЕБЕ ОБРАЩАТЬСЯ?</label><input id="orderGuest" placeholder="Твоё имя" maxlength="50"><button class="btn btn-lime full-width" id="submitOrder" type="button">ОФОРМИТЬ ДЕМОЗАКАЗ <span>↗</span></button><small class="drawer-note">Без оплаты. Здесь работает настоящий Python-сервер.</small></div></aside>
+
+  <div class="modal" id="bookingModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" hidden><button class="icon-btn modal-close" id="closeBooking" type="button" aria-label="Закрыть">×</button><span class="modal-badge">✳ ВЫБОРОЧНЫЙ ДОСТУП</span><h2 id="modalTitle">ТВОЯ <em>НОВАЯ</em><br>ТОЧКА СБОРКИ.</h2><p class="modal-description" id="modalDescription"></p><form id="bookingForm"><label for="guestName" class="small-label">КАК ТЕБЯ ЗОВУТ?</label><input id="guestName" maxlength="50" minlength="2" required placeholder="Например, Саша" autocomplete="given-name"><button class="btn btn-lime full-width" id="confirmBooking" type="submit">ПОДТВЕРДИТЬ БРОНЬ <span>↗</span></button></form></div>
+  <div class="modal result-modal" id="resultModal" role="dialog" aria-modal="true" aria-labelledby="resultTitle" hidden><button class="icon-btn modal-close" id="closeResult" type="button" aria-label="Закрыть">×</button><div class="result-icon">✓</div><span class="modal-badge">MISSION COMPLETED</span><h2 id="resultTitle">ГОТОВО!</h2><p class="result-text" id="resultText"></p><div class="result-code" id="resultCode"></div><button id="copyCode" class="btn btn-lime full-width" type="button">СКОПИРОВАТЬ КОД <span>↗</span></button><p class="result-tip">Сохрани код, чтобы проверить бронь позднее.</p></div>
+  <div class="modal lookup-modal" id="lookupModal" role="dialog" aria-modal="true" aria-labelledby="lookupTitle" hidden><button class="icon-btn modal-close" id="closeLookup" type="button" aria-label="Закрыть">×</button><span class="modal-badge">✳ ТВОЯ БРОНЬ</span><h2 id="lookupTitle">ПРОВЕРИТЬ<br><em>БРОНЬ.</em></h2><form id="lookupForm"><label class="small-label" for="lookupCode">КОД ИЗ ПОДТВЕРЖДЕНИЯ</label><input id="lookupCode" placeholder="ND-XXXXXXXX" required><button class="btn btn-lime full-width" type="submit">НАЙТИ БРОНЬ <span>↗</span></button></form><p id="lookupResult" class="lookup-result" aria-live="polite"></p></div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
