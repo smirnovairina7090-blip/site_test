@@ -60,7 +60,7 @@
         <div class="station-card-head"><span class="station-type">${seatTag(seat.type)}</span><span class="seat-availability ${seat.available ? '' : 'taken'}">● ${seat.available ? 'СВОБОДНО' : 'ЗАНЯТО'}</span></div>
         <div class="station-visual"><div class="pc-screen"></div><div class="headset"></div></div>
         <div class="station-card-foot"><div><h3>${escapeHTML(seat.name)}</h3><p>${escapeHTML(seat.label)}</p></div><div class="station-price">${formatMoney(seat.rate)}<small>за час</small></div></div>
-        <button class="reserve-button" type="button" data-seat="${seat.id}" ${seat.available ? '' : 'disabled'}>${seat.available ? `ЗАБРОНИРОВАТЬ · ${formatMoney(seat.total)}` : 'МЕСТО ЗАНЯТО'} <span>↗</span></button>
+        <div style="min-height:21px;color:#d6ff65;font-size:10px;margin:5px 0">${seat.pricing?.discount ? `✳ ${escapeHTML(seat.pricing.tariff)} · экономия ${formatMoney(seat.pricing.discount)}` : 'СТАНДАРТНЫЙ ТАРИФ'}</div><button class="reserve-button" type="button" data-seat="${seat.id}" ${seat.available ? '' : 'disabled'}>${seat.available ? `ЗАБРОНИРОВАТЬ · ${formatMoney(seat.total)}` : 'МЕСТО ЗАНЯТО'} <span>↗</span></button>
       </article>`).join('');
     document.querySelectorAll('[data-seat]').forEach(button => button.addEventListener('click', () => openBooking(button.dataset.seat)));
   }
@@ -150,10 +150,11 @@
     button.disabled = true;
     try {
       const items = Object.entries(state.cart).map(([id,qty]) => ({id,qty}));
-      const data = await api('/api/orders',{method:'POST',body:JSON.stringify({guest: $('#orderGuest').value.trim() || 'Гость',items})});
+      const data = await api('/api/orders',{method:'POST',body:JSON.stringify({guest: $('#orderGuest').value.trim() || 'Гость',promo: $('#promoCode').value.trim(),items})});
       state.cart = {};
       updateCart();
-      showResult('ЗАКАЗ ПРИНЯТ!', `${data.items.length} позиции · итого ${formatMoney(data.total)}. Пора подкрепиться!`, data.code);
+      showResult('ЗАКАЗ ПРИНЯТ!', `${data.items.length} позиции · итого ${formatMoney(data.total)} · скидка ${formatMoney(data.quote.discount)} · начислено ${data.quote.points} XP. Сумму рассчитал Python!`, data.code);
+      $('#promoCode').value = '';
     } catch(err){toast(err.message,true);}
     finally{button.disabled = false;}
   }
