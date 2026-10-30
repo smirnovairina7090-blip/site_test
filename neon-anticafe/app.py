@@ -12,6 +12,7 @@ import sqlite3
 from datetime import date, datetime
 from pathlib import Path
 from flask import Flask, jsonify, render_template, request
+from control import migrate, record, seat_price, bar_price, install
 
 BASE = Path(__file__).resolve().parent
 app = Flask(__name__)
@@ -59,6 +60,7 @@ def connect() -> sqlite3.Connection:
         guest TEXT NOT NULL, items TEXT NOT NULL, total INTEGER NOT NULL,
         created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
     )""")
+    migrate(db)
     db.commit()
     return db
 
@@ -92,7 +94,7 @@ def parse_slot(payload: dict):
 
 def is_taken(db: sqlite3.Connection, seat_id: str, start: str, end: str) -> bool:
     return bool(db.execute(
-        "SELECT 1 FROM bookings WHERE seat_id=? AND start_at < ? AND end_at > ? LIMIT 1",
+        "SELECT 1 FROM bookings WHERE seat_id=? AND status IN ('confirmed','active') AND start_at < ? AND end_at > ? LIMIT 1",
         (seat_id, end, start),
     ).fetchone())
 
@@ -124,7 +126,8 @@ def availability():
     start, end, hours = slot
     with connect() as db:
         result = [{**seat, "available": not is_taken(db, seat["id"], start, end),
-                   "total": seat["rate"] * hours} for seat in SEATS]
+                   "total": seat_price(seat, hours, start)["total"],
+                   "pricing": seat_price(seat, hours, start)} for seat in SEATS]
     return jsonify({"seats": result, "start": start, "end": end, "hours": hours})
 
 
@@ -148,13 +151,15 @@ def book():
         if is_taken(db, seat["id"], start, end):
             return error("Это место уже занято. Выберите другое.", 409)
         code = make_code("ND")
-        total = seat["rate"] * hours
+        breakdown = seat_price(seat,hours,start)
+        total = breakdown["total"]
         db.execute(
             "INSERT INTO bookings(code, seat_id, guest, start_at, end_at, total) VALUES (?,?,?,?,?,?)",
             (code, seat["id"], guest, start, end, total),
         )
+        record(db,"booking.created",f"{code} · {seat['name']} · {total} ₽",{"code":code,"seat_id":seat["id"]})
         db.commit()
-    return jsonify({"code": code, "seat": seat["name"], "guest": guest,
+    return jsonify({"code": code, "pricing": breakdown, "seat": seat["name"], "guest": guest,
                     "start": start, "end": end, "hours": hours, "total": total}), 201
 
 
@@ -163,7 +168,7 @@ def booking_lookup(code: str):
     if not re.fullmatch(r"ND-[A-F0-9]{8}", code):
         return error("Неверный код бронирования.", 404)
     with connect() as db:
-        row = db.execute("SELECT code, seat_id, guest, start_at, end_at, total FROM bookings WHERE code=?", (code,)).fetchone()
+        row = db.execute("SELECT code, seat_id, guest, start_at, end_at, total, status FROM bookings WHERE code=?", (code,)).fetchone()
     if row is None:
         return error("Бронирование не найдено.", 404)
     return jsonify(dict(row))
@@ -192,13 +197,23 @@ def order():
         item = by_id[entry["id"]]
         normalized.append({"id": item["id"], "name": item["name"], "qty": quantity,
                            "price": item["price"]})
-    total = sum(item["qty"] * item["price"] for item in normalized)
+    promo = str(payload.get("promo","")).strip().upper()
+    try:
+        quote = bar_price(normalized,promo)
+    except ValueError as exc:
+        return error(str(exc))
+    total = quote["total"]
     code = make_code("BAR")
     with connect() as db:
-        db.execute("INSERT INTO orders(code, guest, items, total) VALUES (?,?,?,?)",
-                   (code, guest, json.dumps(normalized, ensure_ascii=False), total))
+        db.execute("INSERT INTO orders(code, guest, items, total, discount, points_earned) VALUES (?,?,?,?,?,?)",
+                   (code, guest, json.dumps(normalized, ensure_ascii=False), total, quote["discount"], quote["points"]))
+        if guest != "Гость":
+            db.execute("""INSERT INTO members(alias,points,visits) VALUES (?,?,1)
+                ON CONFLICT(alias) DO UPDATE SET points=points+excluded.points,visits=visits+1""",
+                (guest,quote["points"]))
+        record(db,"order.created",f"{code} · {guest} · {total} ₽",{"code":code,"promo":promo})
         db.commit()
-    return jsonify({"code": code, "items": normalized, "total": total,
+    return jsonify({"code": code, "items": normalized, "total": total, "quote": quote,
                     "message": "Заказ принят в деморежиме. Оплата не требуется."}), 201
 
 
@@ -209,6 +224,9 @@ def stats():
         orders = db.execute("SELECT COUNT(*) FROM orders").fetchone()[0]
     return jsonify({"stations": len(SEATS), "menu_items": len(MENU),
                     "bookings": bookings, "orders": orders, "stack": ["HTML", "CSS", "JavaScript", "Python", "SQLite"]})
+
+
+install(app, connect, SEATS, MENU, parse_slot, error)
 
 
 if __name__ == "__main__":
