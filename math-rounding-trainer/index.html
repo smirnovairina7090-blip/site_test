@@ -1,0 +1,27 @@
+<!doctype html><html lang="ru"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Тренажёр округления</title><style>body{font:17px system-ui;background:#f4f5fb;color:#18213a;margin:0;padding:20px}main{max-width:650px;margin:auto}section{background:white;border-radius:18px;padding:22px;margin:14px 0;box-shadow:0 2px 12px #18213a12}h1{font-size:28px}button,select,input{font:inherit;padding:12px;border:1px solid #cbd0df;border-radius:10px}button{cursor:pointer;background:#5745c9;color:white;border:0}button:disabled{opacity:.5}input{width:90%;margin:10px 0}label{display:block;margin:12px 0}.digit{display:inline-block;padding:5px 3px;font-size:clamp(24px,5vw,35px);font-weight:bold}.target{background:#dbeafe;color:#1d4ed8;border-radius:5px}.neighbor{background:#ffedd5;color:#c2410c;border-radius:5px}.hint{background:#f3f0ff;padding:12px;border-radius:10px;margin:8px 0}.stats{display:flex;gap:18px;flex-wrap:wrap}#feedback{font-weight:bold;margin:12px 0}small{color:#626b7c}</style><main><h1>Тренажёр округления</h1><p>От миллионов до миллионных. Решай, проверяй себя и открывай подсказки по шагам.</p><section><div class="stats"><span>Решено: <b id="total">0</b></span><span>Верно: <b id="correct">0</b></span><span>Точность: <b id="percent">0%</b></span></div><label>Сложность <select id="level"><option value="1">Лёгкая</option><option value="2" selected>Средняя</option><option value="3">Сложная</option></select></label><label>Разряды <select id="scope"><option value="all">Все</option><option value="integer">Целые</option><option value="decimal">Дробные</option></select></label></section><section><small id="number"></small><p>Округли число <b id="target"></b>:</p><div id="digits"></div><p><small>Синий - нужный разряд, оранжевый - цифра справа.</small></p><input id="answer" inputmode="decimal" placeholder="Введи ответ, например 12,35"><div id="feedback" aria-live="polite"></div><button id="check">Проверить</button> <button id="next">Следующее</button><p><button id="hint">Подсказка по шагам</button></p><div id="hints"></div></section><section><b>Правило округления</b><p>Если цифра справа 0, 1, 2, 3, 4 - оставь нужную цифру. Если 5, 6, 7, 8, 9 - увеличь её на 1.</p></section></main><script>
+const $=id=>document.getElementById(id);
+const ranks=[['миллионов',6],['сотен тысяч',5],['десятков тысяч',4],['тысяч',3],['сотен',2],['десятков',1],['единиц',0],['десятых',-1],['сотых',-2],['тысячных',-3],['десятитысячных',-4],['стотысячных',-5],['миллионных',-6]];
+let q,solved=0,correct=0,count=0,hintStep=0,answered=false;
+const rand=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;
+function next(){
+let level=+$('level').value,scope=$('scope').value;
+let pool=ranks.filter(r=>(scope==='integer'?r[1]>=0:scope==='decimal'?r[1]<0:true)&&(level===1?r[1]<=4&&r[1]>=-3:level===2?r[1]>=-5:true));
+let [name,p]=pool[rand(0,pool.length-1)];
+let integer=String(rand(level===1?1:0,level===1?9999:level===2?999999:9999999));
+if(p>=integer.length)integer=String(rand(1,9))+integer.padStart(p,'0');
+let decimals=p<0?Math.min(8,-p+rand(1,2)):level===1?0:rand(0,level===2?3:6);
+let fraction=decimals?String(rand(0,10**decimals-1)).padStart(decimals,'0'):'';
+let source=integer+(decimals?','+fraction:'');
+let chars=source.split(''),idx=p>=0?integer.length-1-p:integer.length-p;
+let neighbor=Number(chars[idx+1]||0),up=neighbor>=5;
+let expected;
+if(p>=0){let base=10n**BigInt(p);let n=BigInt(integer);expected=String((n/base+BigInt(up?1:0))*base)}
+else{let kept=fraction.slice(0,-p),n=BigInt(integer+kept)+BigInt(up?1:0),base=10n**BigInt(-p);expected=String(n/base)+','+String(n%base).padStart(-p,'0')}
+q={source,name,p,idx,neighbor,up,expected};
+count++;hintStep=0;answered=false;$('number').textContent='Задание '+count;$('target').textContent='до '+name;$('answer').value='';$('feedback').textContent='';$('hints').innerHTML='';$('check').disabled=false;
+$('digits').innerHTML='';chars.forEach((c,i)=>{let s=document.createElement('span');s.className='digit '+(i===idx?'target':i===idx+1?'neighbor':'');s.textContent=c;$('digits').append(s)});
+}
+function check(){if(answered)return;let raw=$('answer').value.trim().replace(/\s/g,'').replace('.',',');if(!/^\d+(,\d+)?$/.test(raw)){$('feedback').textContent='Введи число';return}let ok=Number(raw.replace(',','.'))===Number(q.expected.replace(',','.'));answered=true;solved++;if(ok)correct++;$('total').textContent=solved;$('correct').textContent=correct;$('percent').textContent=Math.round(correct/solved*100)+'%';$('feedback').textContent=ok?'Верно! Молодец.':'Неверно. Правильный ответ: '+q.expected;$('feedback').style.color=ok?'#16834b':'#bd3434';$('check').disabled=true}
+function hint(){let steps=['Найди разряд '+q.name+'. Он выделен синим.','Справа от него цифра '+q.neighbor+'. Она выделена оранжевым.',q.up?'Цифра 5 или больше: увеличь нужный разряд на 1.':'Цифра меньше 5: оставь нужный разряд.',q.p>=0?'Замени цифры справа нулями.':'Отбрось цифры справа от нужного разряда.','Ответ: '+q.expected];if(hintStep<steps.length){let d=document.createElement('div');d.className='hint';d.textContent=steps[hintStep++];$('hints').append(d)}}
+$('next').onclick=next;$('check').onclick=check;$('hint').onclick=hint;$('level').onchange=next;$('scope').onchange=next;$('answer').onkeydown=e=>{if(e.key==='Enter')answered?next():check()};next();
+</script></html>
