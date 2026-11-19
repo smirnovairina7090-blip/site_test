@@ -25,3 +25,6 @@
 @media(max-width:600px){.materials-panel{grid-template-columns:minmax(0,1fr)}.skillspace-award{display:grid;grid-template-columns:78px minmax(0,1fr);text-align:left;gap:17px;padding:18px 16px}.skillspace-award>img{width:78px;height:90px}.skillspace-award h3{font-size:17px}.skillspace-award p{font-size:14px}.skillspace-award .unlock-button{font-size:13px}.skillspace-award .award-earned{justify-content:flex-start}}
 @media print{.materials-panel{grid-template-columns:1fr 70px 1.5fr}.skillspace-award{padding:4px;gap:4px;border:0;background:transparent}.skillspace-award>img{width:42px;height:42px}.skillspace-award h3{font-size:9px}.skillspace-award p{font-size:8px}.skillspace-award .award-earned{font-size:8px}}
 
+
+/* Match the visible size of the neighboring medals. */
+.award img[src$="explain-harmony.webp"],.welcome-badges img[src$="explain-harmony.webp"]{transform:scale(1.1);transform-origin:center}

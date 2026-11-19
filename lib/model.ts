@@ -2,7 +2,7 @@ export const PARTS = ['Монитор','Системный блок','Клави
 export const AWARDS = [
  {id:'level',name:'Новый уровень',image:'level.webp',description:'Справился с тем, что раньше не получалось.'},
  {id:'idea',name:'Автор идеи',image:'idea.webp',description:'Предложил свой способ или полезную доработку.'},
- {id:'explain',name:'Могу объяснить',image:'explain-centered.webp',description:'Понятно объяснил, как выполнить задание.'},
+ {id:'explain',name:'Могу объяснить',image:'explain-harmony.webp',description:'Понятно объяснил, как выполнить задание.'},
  {id:'friend',name:'Друг Креайтивики',image:'friend_award_transparent.webp',description:'Пригласил друга, и он посетил пробное занятие.'},
  {id:'voice',name:'Голос Креайтивики',image:'review_award_transparent.webp',description:'Вместе с родителем оставил честный отзыв. Оценка любая.'},
  {id:'skillspace',name:'Зашёл в Skillspace',image:'skillspace_award.webp',description:'Вошёл в Skillspace и открыл материалы своего курса.'},
