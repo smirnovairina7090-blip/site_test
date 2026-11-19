@@ -1,27 +1,27 @@
 (function(){
   'use strict';
   var config=JSON.parse(document.getElementById('diary-config').textContent);
-  var KEY='creitivika-achievement-diary-v2';
-  var fieldIds=['student','course','teacher','period','routeNumber','newSkill','result','nextGoal'];
-  var eventIds=['eventOlympiad','eventProject','eventFriend'];
+  var KEY='creitivika-achievement-diary-v3';
+  var fieldIds=['student','course','teacher','period','routeNumber','newSkill','result','proof','nextGoal'];
+  var eventIds=['friendInvited','friendVisited'];
   var colors=config.colors.map(function(c){return c[1];});
   var $=function(id){return document.getElementById(id);};
-  function blank(){return {version:2,fields:{routeNumber:'1'},lessons:Array.from({length:8},function(){return {date:'',note:'',color:'',done:false};}),bingo:Array(9).fill(false),awards:Array(config.awards.length).fill(false),events:Array(3).fill(false),materialsUrl:''};}
+  function blank(){return {version:3,fields:{routeNumber:'1'},lessons:Array.from({length:8},function(){return {date:'',note:'',color:'',done:false};}),bingo:Array(9).fill(false),awards:Array(config.awards.length).fill(false),events:Array(2).fill(false),materialsUrl:''};}
   function clean(raw){
-    if(!raw||(raw.version!==1&&raw.version!==2)||!raw.fields||!Array.isArray(raw.lessons)||raw.lessons.length!==8||!Array.isArray(raw.bingo)||raw.bingo.length!==9||!Array.isArray(raw.awards)||raw.awards.length!==(raw.version===1?6:config.awards.length)||!Array.isArray(raw.events)||raw.events.length!==3)throw new Error('Неверный формат файла дневника');
+    if(!raw||(raw.version!==1&&raw.version!==2&&raw.version!==3)||!raw.fields||!Array.isArray(raw.lessons)||raw.lessons.length!==8||!Array.isArray(raw.bingo)||raw.bingo.length!==9||!Array.isArray(raw.awards)||raw.awards.length!==(raw.version===1?6:raw.version===2?4:config.awards.length)||!Array.isArray(raw.events)||raw.events.length!==(raw.version===3?2:3))throw new Error('Неверный формат файла дневника');
     var s=blank();
-    fieldIds.forEach(function(id){s.fields[id]=String(raw.fields[id]||'').slice(0,150);});
+    fieldIds.forEach(function(id){s.fields[id]=String(raw.fields[id]||'').slice(0,id==='newSkill'?44:150);});
     s.fields.routeNumber=String(raw.fields.routeNumber||'1').slice(0,3);
     s.lessons=raw.lessons.map(function(x){x=x||{};return {date:String(x.date||'').slice(0,10),note:String(x.note||'').slice(0,95),color:colors.indexOf(x.color)>=0?x.color:'',done:x.done===true&&colors.indexOf(x.color)>=0};});
-    s.bingo=raw.version===2?raw.bingo.map(function(x){return x===true;}):Array(9).fill(false);
-    s.awards=raw.version===2?raw.awards.map(function(x){return x===true;}):Array(config.awards.length).fill(false);
-    s.events=raw.events.map(function(x){return x===true;});
+    s.bingo=raw.version===3?raw.bingo.map(function(x){return x===true;}):Array(9).fill(false);
+    s.awards=raw.version===3?raw.awards.map(function(x){return x===true;}):Array(config.awards.length).fill(false);
+    s.events=raw.version===3?raw.events.map(function(x){return x===true;}):[false,raw.events[2]===true];
     if(raw.materialsUrl){var u=new URL(String(raw.materialsUrl));if(u.protocol==='https:'||u.protocol==='http:')s.materialsUrl=u.href;}
     return s;
   }
   var state=blank();
   var storageOK=true;
-  try{var old=localStorage.getItem(KEY)||localStorage.getItem('creitivika-achievement-diary-v1');if(old){var parsed=JSON.parse(old);state=clean(parsed);if(parsed.version===1)$('saveStatus').textContent='Дизайн обновлён. Записи занятий сохранены.';}}catch(e){storageOK=false;$('saveStatus').textContent='Автосохранение недоступно. Скачайте прогресс перед выходом.';}
+  try{var old=localStorage.getItem(KEY)||localStorage.getItem('creitivika-achievement-diary-v2')||localStorage.getItem('creitivika-achievement-diary-v1');if(old){var parsed=JSON.parse(old);state=clean(parsed);if(parsed.version<3)$('saveStatus').textContent='Дизайн обновлён. Записи занятий сохранены.';}}catch(e){storageOK=false;$('saveStatus').textContent='Автосохранение недоступно. Скачайте прогресс перед выходом.';}
   function save(){
     try{localStorage.setItem(KEY,JSON.stringify(state));storageOK=true;$('saveStatus').textContent='Прогресс сохранён в этом браузере';}
     catch(e){storageOK=false;$('saveStatus').textContent='Не удалось сохранить. Скачайте файл прогресса.';}
@@ -34,8 +34,8 @@
   function paint(){
     fieldIds.forEach(function(id){$(id).value=state.fields[id]||'';});
     state.lessons.forEach(function(l,i){
-      $('date-'+i).value=l.date;$('note-'+i).value=l.note;
-      var zone=$('zone-'+(i+1));zone.style.fill=l.done?l.color:'#ffffff';zone.setAttribute('aria-pressed',String(l.done));
+      $('date-'+i).value=/^\d{4}-\d{2}-\d{2}$/.test(l.date)?l.date.slice(8,10)+'.'+l.date.slice(5,7):l.date;$('note-'+i).value=l.note;
+      var zone=$('zone-'+(i+1));zone.style.backgroundColor=l.done?l.color:'#ffffff';zone.setAttribute('aria-pressed',String(l.done));
       document.querySelectorAll('[data-lesson="'+i+'"]').forEach(function(btn){btn.classList.toggle('done',l.done);btn.style.backgroundColor=l.done?l.color:'#ffffff';});
     });
     state.bingo.forEach(function(v,i){$('bingo-'+i).setAttribute('aria-pressed',String(v));if(i===4)document.querySelector('[data-bingo="4"]').setAttribute('aria-pressed',String(v));});
@@ -71,8 +71,8 @@
     $('dialogNote').value=l.note;showPalette();$('lessonDialog').showModal();
   }
   document.querySelectorAll('[data-lesson]').forEach(function(b){b.addEventListener('click',function(){openLesson(Number(this.dataset.lesson));});});
-  for(var i=0;i<8;i++)(function(i){var z=$('zone-'+(i+1));z.addEventListener('click',function(){openLesson(i);});z.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();openLesson(i);}});})(i);
-  $('lessonForm').addEventListener('submit',function(e){e.preventDefault();var l=state.lessons[currentLesson];l.date=$('dialogDate').value;l.note=$('dialogNote').value;l.color=currentColor;l.done=true;save();paint();$('lessonDialog').close();toast(state.lessons.every(function(x){return x.done;})?'Все восемь занятий в цвете! Заполни свой итог.':'Модуль раскрашен. Ещё одно занятие в твоей коллекции!');});
+  
+  $('lessonForm').addEventListener('submit',function(e){e.preventDefault();var l=state.lessons[currentLesson];l.date=$('dialogDate').value;l.note=$('dialogNote').value;l.color=currentColor;l.done=true;save();paint();$('lessonDialog').close();toast(state.lessons.every(function(x){return x.done;})?'Все восемь занятий в цвете! Заполни свой итог.':'Занятие отмечено. Добавлен ещё один результат!');});
   $('clearLessonBtn').addEventListener('click',function(){state.lessons[currentLesson].done=false;save();paint();$('lessonDialog').close();});
   document.querySelectorAll('[data-close]').forEach(function(b){b.addEventListener('click',function(){b.closest('dialog').close();});});
   document.querySelectorAll('dialog').forEach(function(d){d.addEventListener('click',function(e){if(e.target===d){var r=d.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)d.close();}});});
