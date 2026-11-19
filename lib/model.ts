@@ -4,7 +4,8 @@ export const AWARDS = [
  {id:'idea',name:'Автор идеи',image:'idea.webp',description:'Предложил свой способ или полезную доработку.'},
  {id:'explain',name:'Могу объяснить',image:'explain.webp',description:'Понятно объяснил, как выполнить задание.'},
  {id:'friend',name:'Друг Креайтивики',image:'friend_award_transparent.webp',description:'Пригласил друга, и он посетил пробное занятие.'},
- {id:'voice',name:'Голос Креайтивики',image:'review_award.webp',description:'Вместе с родителем оставил честный отзыв. Оценка любая.'},
+ {id:'voice',name:'Голос Креайтивики',image:'review_award_transparent.webp',description:'Вместе с родителем оставил честный отзыв. Оценка любая.'},
+ {id:'skillspace',name:'Зашёл в Skillspace',image:'skillspace_award.webp',description:'Вошёл в Skillspace и открыл материалы своего курса.'},
 ];
 export const BINGO = [
  ['Объясняю новое','Объясни правило с урока своими словами.','Например: цикл в коде или сложение дробей.'],
@@ -17,6 +18,7 @@ export const BINGO = [
  ['Довожу до конца','Заверши задание и покажи результат.','Например: решённая задача или этап проекта.'],
  ['Показываю дома','Покажи работу и объясни её близким.','Например: расскажи о работе за минуту.'],
 ];
+export const TOTAL_CHECKS=PARTS.length+BINGO.length+AWARDS.length;
 export const ITEM_IDS=[...PARTS.map((_,i)=>`part-${i+1}`),...AWARDS.map(a=>a.id)];
 export type DiaryState = {
  profile: {student:string;direction:string;teacher:string;period:string;route:string;skillLogin:string;skillPassword:string;materialsUrl:string};

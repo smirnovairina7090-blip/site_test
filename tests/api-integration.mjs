@@ -16,11 +16,11 @@ try{
  [s,y]=await call(a,'unlock','POST',{itemId:'part-1',code:'WRONG'});assert.equal(s,403);
  const codes=JSON.parse(fs.readFileSync(process.env.DIARY_TEST_CODES_PATH||'.teacher-codes.test.json','utf8'));
  for(const [itemId,code] of Object.entries(codes)){[s,y]=await call(a,'unlock','POST',{itemId,code});assert.equal(s,200,JSON.stringify(y));}
- assert.equal(y.unlocked.length,13);
+ assert.equal(y.unlocked.length,14);
  [s,y]=await call(b,'me');assert.equal(y.unlocked.length,0);assert.equal(y.state.profile.student,'');
- const c={};[s,y]=await call(c,'login','POST',{username:x.username,password:x.password});assert.equal(s,200);assert.equal(y.unlocked.length,13);assert.equal(y.state.lessons[0].topic,'Циклы Python');
- [s,y]=await call(a,'unlock','POST',{itemId:'part-1',code:codes['part-1']});assert.equal(s,200);assert.equal(y.unlocked.length,13);
+ const c={};[s,y]=await call(c,'login','POST',{username:x.username,password:x.password});assert.equal(s,200);assert.equal(y.unlocked.length,14);assert.equal(y.state.lessons[0].topic,'Циклы Python');
+ [s,y]=await call(a,'unlock','POST',{itemId:'part-1',code:codes['part-1']});assert.equal(s,200);assert.equal(y.unlocked.length,14);
  const denied=await mf.dispatchFetch('https://diary.test/api/state',{method:'PATCH',headers:{Origin:'https://other.test',Cookie:a.cookie,'Content-Type':'application/json'},body:JSON.stringify({updates:[]})});assert.equal(denied.status,403);
  [s,y]=await call(a,'logout','POST',{});assert.equal(s,200);[s,y]=await call(a,'me');assert.equal(s,401);
- console.log('PASS: registration; unique accounts; cross-device login; saved fields; student isolation; wrong-code rejection; 13 unlocks; idempotence; no client self-unlock; origin validation; logout.');
+ console.log('PASS: registration; unique accounts; cross-device login; saved fields; student isolation; wrong-code rejection; 14 unlocks; idempotence; no client self-unlock; origin validation; logout.');
 }finally{await mf.dispose();}
