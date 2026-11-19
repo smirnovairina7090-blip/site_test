@@ -1,0 +1,1 @@
+{"version":2,"functions":{"api/diary.mjs":{"maxDuration":30}},"headers":[{"source":"/(.*)","headers":[{"key":"Cache-Control","value":"no-store"}]}]}
