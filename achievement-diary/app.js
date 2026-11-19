@@ -5,6 +5,36 @@
   var fieldIds=['student','course','teacher','period','routeNumber','newSkill','result','proof','nextGoal'];
   var eventIds=['friendInvited','friendVisited'];
   var colors=config.colors.map(function(c){return c[1];});
+  var robotPixels=null,robotRegions=null,robotContext=null,robotConfig=JSON.parse(document.getElementById('robot-config').textContent);
+  function drawRobot(){
+    if(!robotPixels)return;
+    var frame=new ImageData(new Uint8ClampedArray(robotPixels.data),robotConfig.width,robotConfig.height);
+    for(var p=0;p<robotRegions.length;p++){
+      var region=robotRegions[p]-1;
+      if(region<0||!state.lessons[region].done)continue;
+      var color=state.lessons[region].color;
+      for(var channel=0;channel<3;channel++)frame.data[p*4+channel]=parseInt(color.slice(1+channel*2,3+channel*2),16);
+    }
+    robotContext.putImageData(frame,0,0);
+    document.querySelectorAll('[data-robot-lesson]').forEach(function(b){var i=Number(b.dataset.robotLesson);b.setAttribute('aria-pressed',String(state.lessons[i].done));});
+  }
+  function setupRobot(){
+    var canvas=document.getElementById('robotCanvas');robotContext=canvas.getContext('2d',{willReadFrequently:true});
+    var img=new Image();img.onload=function(){
+      robotContext.drawImage(img,0,0,canvas.width,canvas.height);robotPixels=robotContext.getImageData(0,0,canvas.width,canvas.height);
+      var width=canvas.width,height=canvas.height,pixels=robotPixels.data;
+      robotRegions=new Uint8Array(width*height);var queue=new Int32Array(width*height);
+      function eligible(i){return i>=0&&i<width*height&&!robotRegions[i]&&pixels[i*4]>robotConfig.threshold&&pixels[i*4+1]>robotConfig.threshold&&pixels[i*4+2]>robotConfig.threshold;}
+      robotConfig.seeds.forEach(function(seeds,g){seeds.forEach(function(seed){
+        var first=seed[1]*width+seed[0];if(!eligible(first))return;
+        var head=0,tail=1;queue[0]=first;robotRegions[first]=g+1;
+        while(head<tail){var i=queue[head++],x=i%width;var neighbors=[i-width,i+width];if(x)neighbors.push(i-1);if(x<width-1)neighbors.push(i+1);
+          neighbors.forEach(function(n){if(eligible(n)){robotRegions[n]=g+1;queue[tail++]=n;}});
+        }
+      });});
+      canvas.parentElement.classList.add('robot-ready');drawRobot();
+    };img.src='assets/robot-coloring.webp';
+  }
   var $=function(id){return document.getElementById(id);};
   function blank(){return {version:3,fields:{routeNumber:'1'},lessons:Array.from({length:8},function(){return {date:'',note:'',color:'',done:false};}),bingo:Array(9).fill(false),awards:Array(config.awards.length).fill(false),events:Array(2).fill(false),materialsUrl:''};}
   function clean(raw){
@@ -48,6 +78,7 @@
     $('bingoStatus').classList.toggle('win',lines>0);
     $('materialsLink').href=state.materialsUrl||'https://skillspace.ru/';
     $('materialsLink').textContent=state.materialsUrl?'Открыть материалы':'Открыть Skillspace';
+    drawRobot();
   }
   fieldIds.forEach(function(id){$(id).addEventListener('input',function(){state.fields[id]=$(id).value;save();});});
   state.lessons.forEach(function(l,i){
@@ -71,8 +102,9 @@
     $('dialogNote').value=l.note;showPalette();$('lessonDialog').showModal();
   }
   document.querySelectorAll('[data-lesson]').forEach(function(b){b.addEventListener('click',function(){openLesson(Number(this.dataset.lesson));});});
+  document.querySelectorAll('[data-robot-lesson]').forEach(function(b){b.addEventListener('click',function(){openLesson(Number(this.dataset.robotLesson));});});
   
-  $('lessonForm').addEventListener('submit',function(e){e.preventDefault();var l=state.lessons[currentLesson];l.date=$('dialogDate').value;l.note=$('dialogNote').value;l.color=currentColor;l.done=true;save();paint();$('lessonDialog').close();toast(state.lessons.every(function(x){return x.done;})?'Все восемь занятий в цвете! Заполни свой итог.':'Занятие отмечено. Добавлен ещё один результат!');});
+  $('lessonForm').addEventListener('submit',function(e){e.preventDefault();var l=state.lessons[currentLesson];l.date=$('dialogDate').value;l.note=$('dialogNote').value;l.color=currentColor;l.done=true;save();paint();$('lessonDialog').close();toast(state.lessons.every(function(x){return x.done;})?'Робот раскрашен! Заполни итог восьми занятий.':'Занятие отмечено. Добавлен ещё один результат!');});
   $('clearLessonBtn').addEventListener('click',function(){state.lessons[currentLesson].done=false;save();paint();$('lessonDialog').close();});
   document.querySelectorAll('[data-close]').forEach(function(b){b.addEventListener('click',function(){b.closest('dialog').close();});});
   document.querySelectorAll('dialog').forEach(function(d){d.addEventListener('click',function(e){if(e.target===d){var r=d.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)d.close();}});});
@@ -99,5 +131,5 @@
   $('newRouteBtn').addEventListener('click',function(){confirmAction('Скачать текущий маршрут и открыть новый лист на 8 занятий? Имя, направление и преподаватель сохранятся.',function(){download();var old=state;state=blank();['student','course','teacher'].forEach(function(k){state.fields[k]=old.fields[k]||'';});state.fields.routeNumber=String(Math.min(999,(parseInt(old.fields.routeNumber,10)||1)+1));state.materialsUrl=old.materialsUrl;save();paint();$('optionsDialog').close();toast('Новый маршрут готов. Предыдущий скачан в файл.');});});
   $('materialsSettings').addEventListener('click',function(){$('materialsUrl').value=state.materialsUrl;$('materialsDialog').showModal();});
   $('materialsForm').addEventListener('submit',function(e){e.preventDefault();try{var url=new URL($('materialsUrl').value);if(url.protocol!=='https:'&&url.protocol!=='http:')throw new Error();state.materialsUrl=url.href;save();paint();$('materialsDialog').close();toast('Ссылка на материалы сохранена.');}catch(e){toast('Укажите полный адрес, начиная с https://');}});
-  paint();
+  setupRobot();paint();
 })();
